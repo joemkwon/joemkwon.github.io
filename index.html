@@ -3,55 +3,426 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joe Kwon - Personal Website</title>
+    <title>Joe Kwon</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Syne:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">Joe Kwon</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+    <div class="grain"></div>
+    <div class="cursor-glow"></div>
+
+    <nav class="top-nav">
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#journey">Journey</a>
+        <a href="#misc">Misc</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <canvas id="flow-field"></canvas>
 
     <main>
-        <section id="home" class="hero">
-            <h1>Welcome to My Website</h1>
-            <p>Nexus of various things me.</p>
+        <section class="hero">
+            <div class="hero-glow"></div>
+            <div class="hero-portrait">
+                <img src="profile.png" alt="Joe Kwon">
+            </div>
+            <h1><span class="gradient-text">Joe Kwon</span></h1>
+            <p class="tagline">Working on AI going well <br>How minds work, how AI should</p>
         </section>
 
         <section id="about" class="about">
-            <h2>About Me</h2>
-            <p>I'll write this later..</p>
-        </section>
+            <div class="bio-controls">
+                <button class="bio-toggle active" data-level="brief">brief</button>
+                <button class="bio-toggle" data-level="more">more</button>
+                <button class="bio-toggle" data-level="full">full story</button>
+            </div>
 
-        <section id="projects" class="projects">
-            <h2>My Projects</h2>
-            <div class="project-grid">
-                <!-- Project cards will go here -->
+            <div class="bio-content" data-level="brief">
+                <p>
+                    Thinking about how AI and good futures fit together.
+                </p>
+            </div>
+
+            <div class="bio-content" data-level="more" style="display: none;">
+                <p>
+                    I work on AI safety and governance. Right now that means thinking about risks from internal deployment, automated R&D, and concentration of power. Before this I spent time in cognitive science, studying moral cognition and how humans infer mental states from sparse evidence.
+                </p>
+                <p>
+                    The through-line is curiosity about minds, artificial and otherwise. I like questions that sit at the boundary between understanding how things work and deciding how they should.
+                </p>
+            </div>
+
+            <div class="bio-content" data-level="full" style="display: none;">
+                <p>
+                    I think about what happens as AI systems get more capable and more embedded in decisions that matter. Some of that is technical: how do we steer these systems, catch failures before they compound, understand what's actually going on inside them. Some of it is governance: who gets to deploy powerful AI internally, how we track the pace of automated R&D, what happens when capability concentrates faster than our ability to course-correct.
+                </p>
+                <p>
+                    I came to this through cognitive science. I spent a few years studying how humans make sense of each other: how we infer mental states from physical traces, how we reconstruct events we never witnessed, how we figure out what someone values from what they do and don't do. I worked on moral cognition too, asking when people think it's okay to break rules. More recently I've been on the AI side directly: red-teaming language models, probing what they know and how they represent it, building benchmarks and evals, testing methods for steering their behavior from the inside.
+                </p>
+                <p>
+                    The through-line is curiosity about minds, artificial and otherwise. I find myself drawn to questions that sit at the boundary between understanding cognition and shaping it, between describing how things work and deciding how they should. I care about rigor but I'm suspicious of fields that mistake formalism for understanding. I think the hard problems are often the ones that resist clean framing, and I'd rather sit with something messy and real than solve something precise and beside the point.
+                </p>
             </div>
         </section>
 
-        <section id="contact" class="contact">
-            <h2>Get in Touch</h2>
-            <div class="social-links">
-                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+        <section id="work" class="work section-divider">
+            <div class="work-header">
+                <h2>work</h2>
+                <div class="work-controls">
+                    <button class="work-toggle active" data-view="selected">selected</button>
+                    <button class="work-toggle" data-view="all">all</button>
+                </div>
+            </div>
+
+            <ul class="project-list" data-view="selected">
+                <li>
+                    <a href="#">
+                        <span class="project-name">Internal Deployment Gaps in AI Regulation</span>
+                        <span class="project-desc">How current AI governance misses risks from internal use of AI systems</span>
+                        <span class="project-meta">Kwon & Casper, forthcoming 2026</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="project-name">What Do Moral Rules Mean?</span>
+                        <span class="project-desc">How people interpret and generalize moral principles</span>
+                        <span class="project-meta">Kwon, Wong, & Levine · Society for Philosophy and Psychology, 2025</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://arxiv.org/abs/2505.09662">
+                        <span class="project-name">Large Language Models Are More Persuasive Than Incentivized Human Persuaders</span>
+                        <span class="project-desc">Comparing AI and human persuasion in real-time interactive settings</span>
+                        <span class="project-meta">Schoenegger et al. (40 authors), 2025</span>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="project-list" data-view="all" style="display: none;">
+                <li>
+                    <a href="#">
+                        <span class="project-name">Internal Deployment Gaps in AI Regulation</span>
+                        <span class="project-desc">How current AI governance misses risks from internal use of AI systems</span>
+                        <span class="project-meta">Kwon & Casper, forthcoming 2026</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="project-name">What Do Moral Rules Mean?</span>
+                        <span class="project-desc">How people interpret and generalize moral principles</span>
+                        <span class="project-meta">Kwon, Wong, & Levine · Society for Philosophy and Psychology, 2025</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://arxiv.org/abs/2505.09662">
+                        <span class="project-name">Large Language Models Are More Persuasive Than Incentivized Human Persuaders</span>
+                        <span class="project-desc">Comparing AI and human persuasion in real-time interactive settings</span>
+                        <span class="project-meta">Schoenegger et al. · 2025</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.centeraipolicy.org/work/ai-agents-governing-autonomy-in-the-digital-age">
+                        <span class="project-name">AI Agents: Governing Autonomy in the Digital Age</span>
+                        <span class="project-desc">Policy proposals for autonomous AI systems and their risks</span>
+                        <span class="project-meta">Kwon · Center for AI Policy, 2025</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://arxiv.org/abs/2411.07213">
+                        <span class="project-name">Comparing Bottom-Up and Top-Down Steering Approaches on In-Context Learning Tasks</span>
+                        <span class="project-desc">Evaluating methods for steering language model behavior</span>
+                        <span class="project-meta">Brumley, Kwon, Krueger, Krasheninnikov, & Anwar · NeurIPS MINT Workshop, 2024</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://escholarship.org/uc/item/1t2568mw">
+                        <span class="project-name">Neuro-Symbolic Models of Human Moral Judgment</span>
+                        <span class="project-desc">Computational models of how humans make moral judgments</span>
+                        <span class="project-meta">Kwon, Levine, & Tenenbaum · CogSci, 2024</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://openreview.net/forum?id=uSvN2oozRK">
+                        <span class="project-name">Does It Know?: Probing for Uncertainty in Language Model Latent Beliefs</span>
+                        <span class="project-desc">Investigating what language models represent about their own uncertainty</span>
+                        <span class="project-meta">Huang & Kwon · NeurIPS Workshop, 2023</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://arxiv.org/abs/2306.09442">
+                        <span class="project-name">Explore, Establish, Exploit: Red Teaming Language Models from Scratch</span>
+                        <span class="project-desc">An automated pipeline for discovering language model vulnerabilities</span>
+                        <span class="project-meta">Casper, Lin, Kwon, Culp, & Hadfield-Menell · 2023</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://escholarship.org/uc/item/3w59797h">
+                        <span class="project-name">When It's Not Out of Line to Get Out of Line</span>
+                        <span class="project-desc">Principles of universalizability, welfare, and harm in moral cognition</span>
+                        <span class="project-meta">Kwon, Tan, Tenenbaum, & Levine · CogSci, 2023</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://neurips.cc/virtual/2022/58821">
+                        <span class="project-name">Values Shape Optimizers Shape Values</span>
+                        <span class="project-desc">On the feedback loop between human values and AI optimization</span>
+                        <span class="project-meta">Kwon · NeurIPS Human-Centered AI Workshop, 2022</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://arxiv.org/abs/2206.15474">
+                        <span class="project-name">Forecasting Future World Events With Neural Networks</span>
+                        <span class="project-desc">Building ML systems to predict real-world events</span>
+                        <span class="project-meta">Zou, Xiao, Jia, Kwon, et al. · NeurIPS, 2022</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://arxiv.org/abs/1911.11132">
+                        <span class="project-name">Scaling Out-of-Distribution Detection for Real-World Settings</span>
+                        <span class="project-desc">Detecting when ML models encounter unfamiliar inputs</span>
+                        <span class="project-meta">Hendrycks, Basart, Mazeika, Zou, Kwon, et al. · ICML, 2022</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://escholarship.org/uc/item/46r7b6ft">
+                        <span class="project-name">Flexibility in Moral Cognition: When Is It Okay to Break the Rules?</span>
+                        <span class="project-desc">How humans reason about exceptions to moral principles</span>
+                        <span class="project-meta">Kwon, Tenenbaum, & Levine · CogSci, 2022</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/35901411/">
+                        <span class="project-name">Social Inferences from Physical Evidence via Bayesian Event Reconstruction</span>
+                        <span class="project-desc">How we infer social information from physical traces</span>
+                        <span class="project-meta">Lopez-Brau, Kwon, & Jara-Ettinger · Journal of Experimental Psychology: General, 2022</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://escholarship.org/uc/item/43n9v4z9">
+                        <span class="project-name">Detecting the Involvement of Agents Through Physical Reasoning</span>
+                        <span class="project-desc">Inferring whether an agent was present from physical evidence</span>
+                        <span class="project-meta">Lopez-Brau, Kwon, McBean, Yildirim, & Jara-Ettinger · CogSci, 2021</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://cogsci.mindmodeling.org/2020/papers/0085/">
+                        <span class="project-name">Mental State Inference from Indirect Evidence Through Bayesian Event Reconstruction</span>
+                        <span class="project-desc">Computational models of inferring mental states from physical traces</span>
+                        <span class="project-meta">Lopez-Brau, Kwon, & Jara-Ettinger · CogSci, 2020</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://arxiv.org/abs/1902.00163">
+                        <span class="project-name">Lift-the-Flap: What, Where and When for Context Reasoning</span>
+                        <span class="project-desc">Object recognition using recurrent attentional models</span>
+                        <span class="project-meta">Zhang, Tseng, Montejo, Kwon, & Kreiman · 2019</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section id="journey" class="journey section-divider">
+            <h2>the path here</h2>
+
+            <div class="timeline">
+                <article class="timeline-entry">
+                    <span class="timeline-era">pre-college</span>
+                    <p>
+                        Summer programs—CTY and Canada/USA Mathcamp. The kind of place where you'd stay up until 3am working on a problem set, not because it was due, but because you weren't done yet. I wanted more of that feeling.
+                    </p>
+                </article>
+
+                <article class="timeline-entry">
+                    <span class="timeline-era">Yale</span>
+                    <p>
+                        Studied CS and psychology but spent most of my time in research labs. Worked with Gabriel Kreiman on visual cognition, then Julian Jara-Ettinger on how we infer what people are thinking from what they leave behind. I was drawn to cognition generally—human minds felt like the obvious place to start understanding intelligence.
+                    </p>
+                </article>
+
+                <article class="timeline-entry">
+                    <span class="timeline-era">early AI safety</span>
+                    <p>
+                        Around 2020 I started paying attention to how much emergent capability was showing up in AI systems. Worked on one of OpenAI's early RLHF projects and spent time at Berkeley with Jacob Steinhardt and Dan Hendrycks. Learned how to do empirical ML research and why evals and benchmarks matter.
+                    </p>
+                </article>
+
+                <article class="timeline-entry">
+                    <span class="timeline-era">MIT</span>
+                    <p>
+                        Joined Josh Tenenbaum's Computational Cognitive Science Lab, working with Sydney Levine on moral and social cognition—how people reason about rules, norms, and each other. A lot of neuro-symbolic modeling, which matters for AI alignment too. Separately, worked with Stephen Casper and Dylan Hadfield-Menell on red-teaming methods to find where language models fail.
+                    </p>
+                </article>
+
+                <article class="timeline-entry">
+                    <span class="timeline-era">LG AI Research</span>
+                    <p>
+                        Research engineering on cross-lingual LLMs under Honglak Lee, working with Lajanugen Logeswaran, Dongsub Shim, and Tolga Ergen. Synthetic data, pretraining, finetuning, evals. One thread I liked: leveraging language-invariant concepts so models can learn new languages more efficiently.
+                    </p>
+                </article>
+
+                <article class="timeline-entry">
+                    <span class="timeline-era">steering and probing</span>
+                    <p>
+                        Worked with David Krueger's group testing activation steering methods. A lot of these techniques promise fine-grained control over model behavior from the inside—we wanted to know where that actually holds up and where it breaks down.
+                    </p>
+                </article>
+
+                <article class="timeline-entry">
+                    <span class="timeline-era">policy</span>
+                    <p>
+                        Center for AI Policy first, writing reports on evals, transparency, and AI agents. Then GovAI's DC fellowship, working on risks from internal AI deployment and metrics for tracking automated AI R&D.
+                    </p>
+                </article>
+
+                <article class="timeline-entry">
+                    <span class="timeline-era">now</span>
+                    <p>
+                        Astra Fellow working with Tom Davidson and Fabien Roger. Focused on secretly loyal AI—threat modeling and designing ML experiments.
+                    </p>
+                </article>
             </div>
         </section>
+
+        <section id="misc" class="misc section-divider">
+            <h2>rabbit holes</h2>
+
+            <details class="misc-category">
+                <summary>reading</summary>
+                <p class="misc-note">Updating soon.</p>
+            </details>
+
+            <details class="misc-category">
+                <summary>listening</summary>
+                <div class="listening-grid">
+                    <div class="genre-group">
+                        <span class="genre-label">hip hop</span>
+                        <div class="album-item">
+                            <span class="album-name">I LAY DOWN MY LIFE FOR YOU</span>
+                            <span class="album-artist">JPEGMAFIA</span>
+                            <span class="album-genre">experimental / industrial</span>
+                        </div>
+                        <div class="album-item">
+                            <span class="album-name">LP! (Offline)</span>
+                            <span class="album-artist">JPEGMAFIA</span>
+                            <span class="album-genre">experimental / glitch</span>
+                        </div>
+                    </div>
+                    <div class="genre-group">
+                        <span class="genre-label">jazz(y)</span>
+                        <div class="album-item">
+                            <span class="album-name">The Black Saint and the Sinner Lady</span>
+                            <span class="album-artist">Charles Mingus</span>
+                            <span class="album-genre">avant-garde</span>
+                        </div>
+                        <div class="album-item">
+                            <span class="album-name">Hot Rats</span>
+                            <span class="album-artist">Frank Zappa</span>
+                            <span class="album-genre">jazz-rock</span>
+                        </div>
+                    </div>
+                    <div class="genre-group">
+                        <span class="genre-label">art pop</span>
+                        <div class="album-item">
+                            <span class="album-name">LUX</span>
+                            <span class="album-artist">Rosalía</span>
+                            <span class="album-genre">orchestral</span>
+                        </div>
+                        <div class="album-item">
+                            <span class="album-name">La Vida Era Más Corta</span>
+                            <span class="album-artist">Milo j</span>
+                            <span class="album-genre">contemporary folk</span>
+                        </div>
+                        <div class="album-item">
+                            <span class="album-name">Vanisher, Horizon Scraper</span>
+                            <span class="album-artist">Quadeca</span>
+                            <span class="album-genre">folktronica</span>
+                        </div>
+                    </div>
+                    <div class="genre-group">
+                        <span class="genre-label">electronic</span>
+                        <div class="album-item">
+                            <span class="album-name">I Love My Computer</span>
+                            <span class="album-artist">Ninajirachi</span>
+                            <span class="album-genre">house / dance / pop</span>
+                        </div>
+                        <div class="album-item">
+                            <span class="album-name">Allbarone</span>
+                            <span class="album-artist">Daxter Dury</span>
+                            <span class="album-genre">synth pop / electropop</span>
+                        </div>
+                        <div class="album-item">
+                            <span class="album-name">The Provocateur</span>
+                            <span class="album-artist">ADÉLA</span>
+                            <span class="album-genre">pop / dance / house</span>
+                        </div>
+                    </div>
+                    <div class="genre-group">
+                        <span class="genre-label">rock</span>
+                        <div class="album-item">
+                            <span class="album-name">Fetch</span>
+                            <span class="album-artist">Melt-Banana</span>
+                            <span class="album-genre">noise / experimental</span>
+                        </div>
+                        <div class="album-item">
+                            <span class="album-name">Pain to Power</span>
+                            <span class="album-artist">Maruja</span>
+                            <span class="album-genre">post-punk / jazz</span>
+                        </div>
+                    </div>
+                </div>
+            </details>
+
+            <details class="misc-category">
+                <summary>looking</summary>
+                <p class="misc-note">Updating soon.</p>
+            </details>
+
+            <details class="misc-category">
+                <summary>bookmarks</summary>
+                <ul class="misc-list compact">
+                    <li class="misc-note-inline">More coming soon.</li>
+                    <li><a href="https://www.omarchishti.com/">Omar Chishti</a></li>
+                    <li><a href="https://hoyeonchang.github.io/">Hoyeon Chang</a></li>
+                </ul>
+            </details>
+        </section>
+
+        <footer id="contact">
+            <p>Say hello</p>
+            <nav class="links">
+                <a href="mailto:joseph3kwon@gmail.com">Email</a>
+                <a href="https://www.linkedin.com/in/joe-k-5ba472119/">LinkedIn</a>
+                <a href="https://x.com/joemkwon">Twitter</a>
+                <a href="https://unfancy.substack.com/">Substack</a>
+                <a href="https://www.albumoftheyear.org/user/kwon/ratings/highest/">AOTY</a>
+            </nav>
+
+            <nav class="bg-controls">
+                <button class="bg-toggle active" data-mode="ocean">ocean</button>
+                <button class="bg-toggle" data-mode="fractal">fractal</button>
+                <button class="bg-toggle" data-mode="flow">flow</button>
+                <button class="bg-toggle" data-mode="constellation">constellation</button>
+                <button class="bg-toggle" data-mode="lorenz">lorenz</button>
+                <button class="bg-toggle" data-mode="voronoi">voronoi</button>
+                <button class="bg-toggle" data-mode="lissajous">lissajous</button>
+            </nav>
+
+            <p class="colophon">
+                My favorite color is the blue you see when you're on a boat and the
+                seafloor drops away into nothing, that moment where the water goes from
+                turquoise to something almost black and you realize there's a mile of
+                water beneath you and it's beautiful and terrifying.
+                Gerstner waves and perspective fade. Caustics from light bending through
+                surfaces that will never quite repeat.
+            </p>
+        </footer>
     </main>
 
-    <footer>
-        <p>&copy; 2025 Joe Kwon</p>
-    </footer>
-
     <script src="script.js"></script>
+    <script data-goatcounter="https://joekwon.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
