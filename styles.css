@@ -957,7 +957,19 @@ footer {
     }
 
     .hero-portrait {
-        display: none;
+        width: 120px !important;
+        height: 120px !important;
+        max-width: 120px !important;
+        max-height: 120px !important;
+        top: 20px;
+        right: -5px;
+    }
+
+    .hero-portrait img {
+        width: 120px !important;
+        height: 120px !important;
+        max-width: 120px !important;
+        max-height: 120px !important;
     }
 
     .bg-controls {
