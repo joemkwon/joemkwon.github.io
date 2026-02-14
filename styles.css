@@ -254,6 +254,7 @@ p:last-child {
     color: var(--text-secondary);
     line-height: 1.6;
     opacity: 0.85;
+    max-width: calc(100% - 250px);
 }
 
 /* === About === */
