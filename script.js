@@ -131,12 +131,12 @@ seafloor drops away into nothing, that moment where the water goes from
 turquoise to something almost black and you realize there's a mile of
 water beneath you and it's beautiful and terrifying.
 Gerstner waves and perspective fade. Caustics from light bending through
-surfaces that will never quite repeat.`,
+surfaces.`,
 
     fractal: `A Julia set, which means you pick a complex number c and then for
 each pixel you keep doing z² + c over and over to see if it flies off
 to infinity or stays bounded, coloring by how quickly it escapes. The
-wild thing is the boundary between "escapes" and "stays forever" turns
+cool thing is that the boundary between "escapes" and "stays forever" turns
 out to have infinite detail no matter how far you zoom in.`,
 
     flow: `Particles following a vector field built from layered Perlin noise
@@ -146,10 +146,8 @@ systems and ocean currents but smaller and prettier and you can watch
 it happen in real time.`,
 
     constellation: `Points drifting around and gently pulling toward each other, and
-when two get close enough a line appears between them. No grand logic
-to it, just proximity, but somehow it ends up looking like neurons
-firing or friends clustering at a party or the way ideas connect when
-you're not forcing it. Connections fade when things drift apart.`,
+when two get close enough a line appears between them. Connections
+fade when things drift apart.`,
 
     lorenz: `Ed Lorenz stumbled onto this in 1963 while modeling weather on an
 early computer and found that the equations are totally deterministic,
@@ -157,11 +155,9 @@ no randomness at all, yet tiny differences in where you start lead to
 wildly different paths which is basically why weather forecasts become
 useless after about a week no matter how good our models get.`,
 
-    voronoi: `Each point owns all the space closer to it than to any other point
-which forms these cells, and the triangles are what you get when you
-connect neighbors. Shows up everywhere once you start looking for it:
-soap bubbles, giraffe spots, cracked mud, cell walls, the way galaxies
-cluster across the universe.`,
+    voronoi: `Each point owns all the space closer to it than to any other point,
+which forms these cells. Soap bubbles, giraffe spots, cracked mud,
+cell walls, galaxy clusters—all Voronoi.`,
 
     lissajous: `Two waves at right angles with different frequencies and the ratio
 between them determines what shape you get, so 3:4 gives you one kind
