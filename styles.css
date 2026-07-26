@@ -1,0 +1,1104 @@
+/* === Fonts (self-hosted, latin subset, variable) === */
+@font-face {
+    font-family: 'Newsreader';
+    font-style: normal;
+    font-weight: 400 500;
+    font-display: swap;
+    src: url(fonts/newsreader-normal-400-latin.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: 'Newsreader';
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url(fonts/newsreader-italic-400-latin.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: 'Syne';
+    font-style: normal;
+    font-weight: 400 600;
+    font-display: swap;
+    src: url(fonts/syne-normal-400-latin.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* === Base === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #080d12;
+    --bg-subtle: #0c1318;
+    --text: #D5DAE1;
+    --text-secondary: #7A8088;
+    --text-tertiary: #7E8794; /* keeps ≥4.5:1 (WCAG AA) on --bg and --bg-subtle */
+    --accent: #9AB0C8;
+    --accent-subtle: #6A7A8A;
+    --border: #151d25;
+}
+
+html {
+    font-size: 18px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 400;
+    font-optical-sizing: auto;
+    line-height: 1.75;
+    color: var(--text);
+    background-color: var(--bg);
+    min-height: 100vh;
+}
+
+/* Cursor glow - follows mouse */
+.cursor-glow {
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(
+        circle at center,
+        rgba(100, 140, 180, 0.18) 0%,
+        rgba(100, 140, 180, 0.09) 25%,
+        rgba(100, 140, 180, 0.03) 45%,
+        transparent 65%
+    );
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+
+.cursor-glow.active {
+    opacity: 1;
+}
+
+/* Subtle grain texture */
+.grain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.02;
+    z-index: 1000;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.3' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* === Top Nav === */
+.top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    padding: 1.5rem 2rem;
+    background: linear-gradient(to bottom, var(--bg) 40%, transparent);
+    z-index: 100;
+}
+
+.top-nav a {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--text-tertiary);
+    transition: color 0.3s ease;
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
+}
+
+.top-nav a:hover {
+    color: var(--text-secondary);
+}
+
+/* === Layout === */
+main {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 10rem 2rem 6rem;
+}
+
+section {
+    margin-bottom: 5rem;
+}
+
+/* Keep anchor targets clear of the fixed nav */
+section,
+footer {
+    scroll-margin-top: 5rem;
+}
+
+/* === Typography === */
+h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 500;
+    font-size: 2.75rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--text);
+    opacity: 0.7;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+    text-transform: lowercase;
+}
+
+/* Subtle shimmer on name — barely perceptible */
+.gradient-text {
+    color: var(--text);
+    background: linear-gradient(
+        120deg,
+        var(--text) 0%,
+        var(--text) 40%,
+        var(--accent) 50%,
+        var(--text) 60%,
+        var(--text) 100%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 8s ease-in-out infinite;
+    transition: letter-spacing 0.4s ease;
+}
+
+.gradient-text:hover {
+    letter-spacing: 0.02em;
+}
+
+@keyframes shimmer {
+    0%, 100% {
+        background-position: 200% center;
+    }
+    50% {
+        background-position: 0% center;
+    }
+}
+
+p {
+    margin-bottom: 1.25rem;
+    color: var(--text);
+}
+
+p:last-child {
+    margin-bottom: 0;
+}
+
+/* === Hero === */
+.hero {
+    position: relative;
+    margin-bottom: 4rem;
+    padding-top: 2rem;
+}
+
+.hero-portrait {
+    position: absolute;
+    top: 40px;
+    right: -10px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.hero-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+}
+
+/* Soft ambient glow */
+.hero-glow {
+    position: absolute;
+    top: -20%;
+    left: -30%;
+    width: 70%;
+    height: 200%;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(80, 120, 160, 0.08) 0%,
+        rgba(80, 120, 160, 0.03) 40%,
+        transparent 70%
+    );
+    pointer-events: none;
+    animation: glowPulse 12s ease-in-out infinite;
+}
+
+/* --gx/--gy are set from JS for a subtle mouse parallax; they must live inside
+   the keyframes because a running animation overrides any inline transform */
+@keyframes glowPulse {
+    0%, 100% {
+        opacity: 1;
+        transform: translate(var(--gx, 0px), var(--gy, 0px)) scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: translate(var(--gx, 0px), var(--gy, 0px)) scale(1.1);
+    }
+}
+
+/* Flow field canvas */
+#flow-field {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+}
+
+.tagline {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: calc(100% - 250px);
+}
+
+/* === About === */
+.bio-controls {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    background: var(--bg-subtle);
+    border-radius: 4px;
+    padding: 3px;
+    width: fit-content;
+}
+
+.bio-toggle {
+    background: none;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    transition: color 0.3s ease, background 0.3s ease;
+    letter-spacing: 0.03em;
+    border-radius: 3px;
+    position: relative;
+    z-index: 1;
+}
+
+.bio-toggle:hover {
+    color: var(--text-secondary);
+}
+
+.bio-toggle.active {
+    color: var(--text);
+    background: var(--border);
+}
+
+.bio-content {
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.about p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+}
+
+/* === Section Dividers === */
+.section-divider {
+    position: relative;
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+}
+
+.section-divider::before,
+footer::before {
+    content: '·    ·    ·    ·    ·    ·    ·    ·    ·    ·    ·    ·    ·';
+    /* alt-text syntax hides the dots from screen readers where supported */
+    content: '·    ·    ·    ·    ·    ·    ·    ·    ·    ·    ·    ·    ·' / '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1rem;
+    letter-spacing: 0.5em;
+    color: var(--text-tertiary);
+    opacity: 0.35; /* static fallback when the animation is disabled */
+    white-space: nowrap;
+    animation: surfaceDots 3s ease-in-out infinite;
+}
+
+/* === Projects === */
+.work-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.work-header h2 {
+    margin-bottom: 0;
+}
+
+.work-controls {
+    display: flex;
+    gap: 0.25rem;
+    background: var(--bg-subtle);
+    border-radius: 4px;
+    padding: 3px;
+}
+
+.work-toggle {
+    background: none;
+    border: none;
+    padding: 0.35rem 0.7rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    transition: color 0.3s ease, background 0.3s ease;
+    letter-spacing: 0.03em;
+    border-radius: 3px;
+}
+
+.work-toggle:hover {
+    color: var(--text-secondary);
+}
+
+.work-toggle.active {
+    color: var(--text);
+    background: var(--border);
+}
+
+.project-list {
+    list-style: none;
+}
+
+.project-list li {
+    position: relative;
+    border-top: 1px solid var(--border);
+}
+
+.project-list li:last-child {
+    border-bottom: 1px solid var(--border);
+}
+
+/* "recent" view: show only the first three entries of the single list */
+.project-list.recent-mode li:nth-child(n+4) {
+    display: none;
+}
+
+.project-list.recent-mode li:nth-child(3) {
+    border-bottom: 1px solid var(--border);
+}
+
+/* The whole row toggles the summary */
+.project-toggle {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    font: inherit;
+    color: inherit;
+    padding: 1.25rem 2.5rem 1.25rem 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.project-toggle:hover {
+    padding-left: 0.75rem;
+}
+
+.project-toggle:hover .project-name,
+.project-list li.open .project-name {
+    color: var(--accent);
+}
+
+/* Link icon out to the paper */
+.project-link {
+    position: absolute;
+    top: 1.15rem;
+    right: 0;
+    padding: 0.25rem 0.5rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    line-height: 1;
+    text-decoration: none;
+    color: var(--text-tertiary);
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.project-link:hover {
+    color: var(--accent);
+    transform: translate(1px, -1px);
+}
+
+.project-name {
+    display: block;
+    font-family: 'Syne', sans-serif;
+    font-weight: 500;
+    font-size: 1.05rem;
+    margin-bottom: 0.35rem;
+    transition: color 0.3s ease;
+}
+
+/* Collapsed by default; the + toggle reveals it */
+.project-desc {
+    display: none;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    padding: 0 2.5rem 1.25rem 0;
+    margin-top: -0.5rem;
+}
+
+.project-list li.open .project-desc {
+    display: block;
+    animation: fallIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.project-meta {
+    display: block;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    margin-top: 0.4rem;
+    letter-spacing: 0.02em;
+}
+
+/* === Journey / Timeline === */
+.journey {
+    /* margin handled by section-divider */
+}
+
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(
+        to bottom,
+        var(--accent-subtle) 0%,
+        var(--accent) 30%,
+        var(--accent-subtle) 60%,
+        var(--border) 100%
+    );
+    opacity: 0.6;
+}
+
+
+/* Traveling light on the timeline */
+.timeline-glow {
+    position: absolute;
+    left: -3px;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.8;
+    filter: blur(2px);
+    transition: top 0.1s ease-out;
+}
+
+.timeline-entry {
+    position: relative;
+    margin-bottom: 2.5rem;
+}
+
+.timeline-entry:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-entry::before {
+    content: '';
+    position: absolute;
+    left: -2rem;
+    top: 0.5rem;
+    width: 5px;
+    height: 5px;
+    background: var(--accent-subtle);
+    border-radius: 50%;
+    transform: translateX(-2px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.timeline-entry:hover::before {
+    transform: translateX(-2px) scale(1.4);
+    box-shadow: 0 0 8px var(--accent-subtle);
+}
+
+/* "now" entry (first, since the timeline runs newest to oldest) gets a pulse */
+.timeline-entry:first-child::before {
+    width: 7px;
+    height: 7px;
+    transform: translateX(-3px);
+    background: var(--accent);
+    animation: nowPulse 2s ease-in-out infinite;
+}
+
+.timeline-entry:first-child:hover::before {
+    transform: translateX(-3px) scale(1.3);
+}
+
+@keyframes nowPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(100, 140, 180, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 6px rgba(100, 140, 180, 0);
+    }
+}
+
+.timeline-era {
+    display: block;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.02em;
+}
+
+.timeline-entry p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin: 0;
+}
+
+.timeline-entry p a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.timeline-entry p a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent-subtle);
+}
+
+/* === Misc / Rabbit Holes === */
+.misc {
+    /* margin handled by section-divider */
+}
+
+.misc-category {
+    margin-bottom: 0.4rem;
+    --depth: 0;
+}
+
+/* Progressive depth - falling deeper into the rabbit hole */
+.misc-category:nth-of-type(1) { --depth: 0; }
+.misc-category:nth-of-type(2) { --depth: 1; }
+.misc-category:nth-of-type(3) { --depth: 2; }
+.misc-category:nth-of-type(4) { --depth: 3; }
+
+.misc-category summary {
+    font-family: 'Syne', sans-serif;
+    font-size: calc(0.85rem - var(--depth) * 0.02rem);
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    padding: 0.5rem 0;
+    padding-left: calc(var(--depth) * 0.6rem);
+    border-bottom: 1px solid var(--border);
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+    letter-spacing: calc(0.02em + var(--depth) * 0.01em);
+    opacity: calc(1 - var(--depth) * 0.08);
+}
+
+.misc-category summary::-webkit-details-marker {
+    display: none;
+}
+
+.misc-category summary::before {
+    content: '·';
+    font-size: 1.2rem;
+    line-height: 1;
+    color: var(--text-tertiary);
+    transition: transform 0.4s ease, opacity 0.3s ease;
+    opacity: 0.4;
+}
+
+/* Multiply the dots as we go deeper */
+.misc-category:nth-of-type(2) summary::before { content: '··'; letter-spacing: 0.1em; }
+.misc-category:nth-of-type(3) summary::before { content: '···'; letter-spacing: 0.1em; }
+.misc-category:nth-of-type(4) summary::before { content: '····'; letter-spacing: 0.1em; }
+
+.misc-category[open] summary::before {
+    transform: rotate(90deg) translateX(2px);
+    opacity: 0.8;
+}
+
+.misc-category summary:hover {
+    color: var(--accent);
+    transform: translateX(4px);
+}
+
+.misc-category summary:hover::before {
+    opacity: 0.8;
+}
+
+/* Content falls in */
+.misc-category[open] > *:not(summary) {
+    animation: fallIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes fallIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-12px) scale(0.98);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.misc-list {
+    list-style: none;
+    padding: 1rem 0 0.5rem 1rem;
+    padding-left: calc(1rem + var(--depth, 0) * 0.6rem);
+}
+
+.misc-list li {
+    margin-bottom: 1rem;
+}
+
+.misc-list li:last-child {
+    margin-bottom: 0;
+}
+
+.misc-list a {
+    font-size: 0.9rem;
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.misc-list a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent-subtle);
+}
+
+.misc-note {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text);
+    margin-top: 0.3rem;
+    line-height: 1.5;
+    opacity: 0.7;
+}
+
+/* Listening grid layout */
+.listening-grid {
+    padding: 1rem 0 0.5rem 1rem;
+    padding-left: calc(1rem + var(--depth, 0) * 0.6rem);
+}
+
+.genre-group {
+    margin-bottom: 1.25rem;
+}
+
+.genre-group:last-child {
+    margin-bottom: 0;
+}
+
+.genre-label {
+    display: block;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    letter-spacing: 0.06em;
+    margin-bottom: 0.5rem;
+}
+
+.album-item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding-left: 1rem;
+    margin-bottom: 0.4rem;
+    font-size: 0.9rem;
+}
+
+.album-item:last-child {
+    margin-bottom: 0;
+}
+
+.album-name {
+    color: var(--text);
+}
+
+.album-artist {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.album-artist::before {
+    content: "—";
+    margin-right: 0.5rem;
+    opacity: 0.5;
+}
+
+.album-genre {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    margin-left: auto;
+    white-space: nowrap;
+}
+
+.album-item:hover .album-genre {
+    opacity: 1;
+}
+
+/* Compact list variant */
+.misc-list.compact li {
+    margin-bottom: 0.5rem;
+}
+
+.misc-note-inline {
+    font-size: 0.8rem;
+    color: var(--text);
+    opacity: 0.7;
+    margin-bottom: 0.75rem !important;
+}
+
+/* === Footer === */
+footer {
+    margin-top: 6rem;
+    padding-top: 3rem;
+    position: relative;
+}
+
+/* Creative demarcation - surfacing dots (shared block lives with .section-divider) */
+footer::before {
+    top: 2.2rem;
+}
+
+@keyframes surfaceDots {
+    0%, 100% {
+        opacity: 0.2;
+        transform: translateX(-50%) translateY(0);
+    }
+    50% {
+        opacity: 0.5;
+        transform: translateX(-50%) translateY(-2px);
+    }
+}
+
+footer p {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.links {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.links a {
+    font-family: 'Syne', sans-serif;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    position: relative;
+    transition: color 0.3s ease;
+    letter-spacing: 0.02em;
+}
+
+.links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--accent-subtle);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.links a:hover {
+    color: var(--text-secondary);
+}
+
+.links a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.colophon {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    max-width: 560px;
+    line-height: 1.7;
+    font-style: normal;
+}
+
+/* Background mode controls */
+.bg-controls {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.bg-toggle {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    transition: color 0.3s ease;
+    letter-spacing: 0.03em;
+}
+
+.bg-toggle:hover {
+    color: var(--text-secondary);
+}
+
+.bg-toggle.active {
+    color: var(--accent);
+}
+
+/* === Animations === */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.top-nav {
+    animation: fadeUp 0.6s ease-out;
+}
+
+.hero {
+    animation: fadeUp 0.8s ease-out 0.1s both;
+}
+
+.about {
+    animation: fadeUp 0.8s ease-out 0.2s both;
+}
+
+.work {
+    animation: fadeUp 0.8s ease-out 0.3s both;
+}
+
+footer {
+    animation: fadeUp 0.8s ease-out 0.4s both;
+}
+
+/* === Responsive === */
+@media (max-width: 640px) {
+    html {
+        font-size: 16px;
+    }
+
+    .top-nav {
+        gap: 2rem;
+        padding: 1.25rem 1.5rem;
+    }
+
+    main {
+        padding: 7rem 1.5rem 4rem;
+    }
+
+    h1 {
+        font-size: 2.25rem;
+    }
+
+    .tagline {
+        font-size: 1rem;
+    }
+
+    /* No hover on touch: show album genres statically */
+    .album-genre {
+        opacity: 1;
+    }
+
+    .links {
+        gap: 1.25rem;
+        flex-wrap: wrap;
+    }
+
+    .cursor-glow {
+        display: none;
+    }
+
+    #flow-field {
+        opacity: 0.4;
+    }
+
+    .hero-portrait {
+        width: 120px;
+        height: 120px;
+        top: 20px;
+        right: -5px;
+    }
+
+    .tagline {
+        max-width: calc(100% - 135px);
+    }
+
+    .bg-controls {
+        gap: 1rem;
+    }
+
+    .bg-toggle {
+        font-size: 0.7rem;
+    }
+}
+
+/* Hover is unavailable on touch devices: show album genres statically */
+@media (hover: none) {
+    .album-genre {
+        opacity: 1;
+    }
+}
+
+/* === Focus === */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+}
+
+/* === Reduced motion === */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-delay: 0s !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .cursor-glow {
+        display: none;
+    }
+}
+
+/* === Print === */
+@media print {
+    :root {
+        --bg: #ffffff;
+        --bg-subtle: #f2f2f2;
+        --text: #111111;
+        --text-secondary: #333333;
+        --text-tertiary: #555555;
+        --accent: #0a3d62;
+        --accent-subtle: #5a7088;
+        --border: #cccccc;
+    }
+
+    .top-nav,
+    .grain,
+    .cursor-glow,
+    #flow-field,
+    .hero-glow,
+    .bg-controls,
+    .bio-controls,
+    .work-controls {
+        display: none;
+    }
+
+    main {
+        padding-top: 2rem;
+    }
+
+    /* Print the full publication list with all summaries expanded */
+    .project-list.recent-mode li:nth-child(n+4) {
+        display: list-item;
+    }
+
+    .project-list.recent-mode li:nth-child(3) {
+        border-bottom: none;
+    }
+
+    .project-desc {
+        display: block;
+    }
+
+    .project-link {
+        display: none;
+    }
+}
+
+/* === Selection === */
+::selection {
+    background-color: var(--accent-subtle);
+    color: var(--bg);
+}

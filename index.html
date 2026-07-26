@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="5PIFWdNCbrEHXrkpVpL_Aq-HkoxYokrFJEffGZVGEsM" />
+    <meta name="description" content="Joe Kwon works on AI safety and governance: mitigating risks from secret loyalties in AI, building on work on internal deployment, automated R&D, and concentration of power. Background in cognitive science and moral cognition at MIT and Yale.">
+    <meta name="theme-color" content="#080d12">
+    <link rel="canonical" href="https://www.joe-kwon.com/">
+
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.joe-kwon.com/">
+    <meta property="og:title" content="Joe Kwon — AI Safety &amp; Governance Researcher">
+    <meta property="og:description" content="Joe Kwon works on AI safety and governance, currently threat modeling secretly loyal AI, building on work on internal deployment, automated R&D, and concentration of power.">
+    <meta property="og:image" content="https://www.joe-kwon.com/profile-og.jpg">
+    <meta property="og:image:width" content="1024">
+    <meta property="og:image:height" content="1024">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@joemkwon">
+    <meta name="twitter:title" content="Joe Kwon — AI Safety &amp; Governance Researcher">
+    <meta name="twitter:description" content="Joe Kwon works on AI safety and governance, currently threat modeling secretly loyal AI, building on work on internal deployment, automated R&D, and concentration of power.">
+    <meta name="twitter:image" content="https://www.joe-kwon.com/profile-og.jpg">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Joe Kwon",
+        "url": "https://www.joe-kwon.com",
+        "image": "https://www.joe-kwon.com/profile-og.jpg",
+        "jobTitle": "AI Safety Researcher",
+        "description": "Works on AI safety and governance, currently threat modeling secretly loyal AI, building on work on internal deployment, automated R&D, and concentration of power.",
+        "alumniOf": [
+            {
+                "@type": "CollegeOrUniversity",
+                "name": "MIT"
+            },
+            {
+                "@type": "CollegeOrUniversity",
+                "name": "Yale University"
+            }
+        ],
+        "sameAs": [
+            "https://x.com/joemkwon",
+            "https://www.linkedin.com/in/joe-k-5ba472119/",
+            "https://unfancy.substack.com/"
+        ]
+    }
+    </script>
+
+    <title>Joe Kwon — AI Safety &amp; Governance Researcher</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="preload" href="fonts/newsreader-normal-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/newsreader-italic-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/syne-normal-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="grain"></div>
+    <div class="cursor-glow"></div>
+
+    <nav class="top-nav" aria-label="Main">
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#journey">Journey</a>
+        <a href="#misc">Misc</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <canvas id="flow-field"></canvas>
+
+    <main>
+        <section class="hero">
+            <div class="hero-glow"></div>
+            <div class="hero-portrait">
+                <img src="profile.jpg" alt="Joe Kwon" width="440" height="440" fetchpriority="high">
+            </div>
+            <h1><span class="gradient-text">Joe Kwon</span></h1>
+            <p class="tagline">Trying to help steer towards better (AI-entangled) futures!</p>
+        </section>
+
+        <section id="about" class="about">
+            <div class="bio-controls" role="group" aria-label="Bio length">
+                <button class="bio-toggle active" data-level="brief" aria-pressed="true">brief</button>
+                <button class="bio-toggle" data-level="more" aria-pressed="false">more</button>
+                <button class="bio-toggle" data-level="full" aria-pressed="false">full story</button>
+            </div>
+
+            <div class="bio-content" data-level="brief">
+                <p>
+                    AI is poised to be deeply transformative. I think about how to make that go well!
+                </p>
+            </div>
+
+            <div class="bio-content" data-level="more" style="display: none;">
+                <p>
+                    I think AI is likely to be deeply transformative, for better or worse, and I work on AI safety and governance to help things go well. Right now that means working on mitigating risks from secret loyalties in AI: systems trained to appear aligned while covertly serving another actor. Before this, I built multilingual LLMs as a research engineer and studied minds as a computational cognitive scientist, modeling moral cognition and how humans infer mental states from sparse evidence.
+                </p>
+                <p>
+                    The through-line is curiosity about minds, artificial and otherwise. I like questions that sit at the boundary between understanding how things work and deciding how they should.
+                </p>
+            </div>
+
+            <div class="bio-content" data-level="full" style="display: none;">
+                <p>
+                    I think AI is going to be the most transformative development in human history. My work focuses on what happens as these systems get more capable and more embedded in critical decisions. Some of that is technical: how do we control these systems, catch failures before they compound, understand what's actually going on inside them. Some of it is governance: how we track the automation of AI R&D, and what happens when capabilities and power concentrate faster than our ability to course-correct.
+                </p>
+                <p>
+                    I started my research journey in cognitive science, studying how humans make sense of each other: how we infer mental states from physical traces, how we reconstruct events we never witnessed, how we figure out what someone values from what they do and don't do. I also worked on moral cognition: building neuro-symbolic computational models of moral judgment and drawing on frameworks like contractualism, universalizability, and virtual bargaining to understand how people interpret moral rules, decide when exceptions are warranted, and negotiate competing moral demands. More recently I've been on the AI side directly: red-teaming language models, probing what they know and how they represent it, building benchmarks and evals, testing methods for steering their behavior from the inside.
+                </p>
+                <p>
+                    The through-line is curiosity about minds, artificial and otherwise. I find myself drawn to questions that sit at the boundary between understanding cognition and shaping it, between describing how things work and deciding how they should. I care about rigor but I'm suspicious of fields that mistake formalism for understanding. I think the hard problems are often the ones that resist clean framing, and I'd rather sit with something messy and real than solve something precise and beside the point.
+                </p>
+            </div>
+        </section>
+
+        <section id="work" class="work section-divider">
+            <div class="work-header">
+                <h2>work</h2>
+                <div class="work-controls" role="group" aria-label="Work view">
+                    <button class="work-toggle active" data-view="recent" aria-pressed="true">recent</button>
+                    <button class="work-toggle" data-view="all" aria-pressed="false">all</button>
+                </div>
+            </div>
+
+            <!-- Single list; "recent" view shows the first three entries (see .recent-mode in styles.css) -->
+            <ul class="project-list recent-mode">
+                <li>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-1">
+                        <span class="project-name">AIs with Secret Loyalties are a Serious but Addressable Threat</span>
+                        <span class="project-meta">Kwon et al. · ICML TAIGR Workshop, 2026</span>
+                    </button>
+                    <a class="project-link" href="https://www.formationresearch.com/secret-loyalties-whitepaper.pdf" aria-label="Open paper">&#8599;</a>
+                    <span class="project-desc" id="pubdesc-1">A secretly loyal AI is one whose outputs advance the interests of a specific actor (an adversary state, an executive, another power) without that loyalty being disclosed to operators, auditors, or users. Proof-of-concept loyalties that evade black-box auditing can already be trained into open-weight models, and because secret loyalties are designed to evade governance, market pressure, and public scrutiny, they demand technical solutions. Unlike emergent misalignment, they target specific principals, which creates a distinct and tractable defensive foothold. The paper defines the threat, maps how it differs from standard backdoors and other attack pathways, and lays out a research agenda across five directions, ending with a call to action for researchers, developers, and governments.</span>
+                </li>
+                <li>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-2">
+                        <span class="project-name">Toward an O*NET for AI R&D</span>
+                        <span class="project-meta">Denain, Kwon, & Ho · Epoch AI, 2026</span>
+                    </button>
+                    <a class="project-link" href="https://epoch.ai/gradient-updates/toward-an-onet-for-ai-rnd" aria-label="Open paper">&#8599;</a>
+                    <span class="project-desc" id="pubdesc-2">Forecasts of AI R&D automation mostly lean on crude proxies (compute trends, benchmark scores) that say little about which parts of the research workflow are actually being automated. This piece proposes a task taxonomy modeled on O*NET, the occupational database used to track automation across the US economy: six categories spanning the AI R&D workflow, broken into more than sixty granular tasks rated on a 0–5 automation scale. The aim is a common vocabulary precise enough to give real situational awareness of how much of AI research AI systems can already do.</span>
+                </li>
+                <li>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-3">
+                        <span class="project-name">Evaluating Contextual Illegality: AI Compliance in Corporate Law Scenarios</span>
+                        <span class="project-meta">Aka, Kwon, & Kolt · ICML, 2026</span>
+                    </button>
+                    <span class="project-desc" id="pubdesc-3">Models reliably refuse requests that are explicitly unlawful, but in the real world illegality often comes from context. This evaluation builds four corporate-law scenarios where routine actions (editing documents, trading stock, requesting payment, approving communications) become unlawful because of circumstances like a pending investigation or a bankruptcy filing, and tests frontier models in both chat and agentic settings against a human baseline. The best models consistently followed lawful requests and refused unlawful ones, though performance varied substantially across scenarios and models, with distinct failure modes like over-refusal of lawful requests and better performance from reasoning models and in agentic environments. The methodology extends naturally to evaluating legal compliance in other scenarios and domains.</span>
+                </li>
+                <li>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-4">
+                        <span class="project-name">Measuring AI R&D Automation</span>
+                        <span class="project-meta">Kwon, Chan, Padarath, Greaves, & Anderljung · GovAI, 2026</span>
+                    </button>
+                    <a class="project-link" href="https://www.governance.ai/research-paper/measuring-ai-r-d-automation" aria-label="Open paper">&#8599;</a>
+                    <span class="project-desc" id="pubdesc-4">Whether AI R&D is being automated, and how fast, matters for whether capabilities outpace safety and oversight, yet existing data, mostly capability benchmarks, cannot answer it. The paper proposes concrete indicators to track instead: how capital is allocated in AI R&D, how researchers actually spend their time, and how AI systems are actually used across the research pipeline. It argues that companies and independent organizations should start collecting this data now, with government support, so policymakers retain visibility and can deploy proportionate safeguards.</span>
+                </li>
+                <li>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-5">
+                        <span class="project-name">Internal Deployment Gaps in AI Regulation</span>
+                        <span class="project-meta">Kwon & Casper · FAccT, 2026</span>
+                    </button>
+                    <a class="project-link" href="https://arxiv.org/abs/2601.08005" aria-label="Open paper">&#8599;</a>
+                    <span class="project-desc" id="pubdesc-5">Frontier AI rules mostly target systems deployed to external users, but companies also deploy highly capable models inside their own walls: automating R&D, accelerating critical business processes, handling sensitive proprietary data. Examining US and EU frontier AI regulation as of 2025, this work identifies three ways internally deployed systems can slip past intended oversight: scope ambiguity about whether internal use is covered at all, point-in-time compliance assessments that miss how internal systems continuously evolve, and information asymmetries that leave regulators unaware of what is running. It then traces why these gaps persist (tensions around measurability, incentives, and information access) and maps candidate remedies along with their tradeoffs, so that policy on internal deployment is made deliberately rather than incidentally.</span>
+                </li>
+                <li>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-6">
+                        <span class="project-name">What Do Moral Rules Mean?</span>
+                        <span class="project-meta">Kwon, Wong, & Levine · CogSci, 2026</span>
+                    </button>
+                    <a class="project-link" href="https://osf.io/preprints/psyarxiv/wfj4q_v1" aria-label="Open paper">&#8599;</a>
+                    <span class="project-desc" id="pubdesc-6">A rule like "no walking on the grass" communicates far more than its literal content: people apply it sensibly to edge cases the rule-maker never anticipated. The paper develops a theory, instantiated as a computational cognitive model, on which a moral rule is a speech act addressed to a group, expressing a summary of the agreement rational actors would reach when navigating an interdependent choice problem, which keeps the rule tied to the reasons behind it. On this account, judging whether an action violates a rule means consulting the rule's purpose and mentally simulating the underlying agreement: would the point of the rule still be upheld if everyone were permitted to act this way?</span>
+                </li>
+                <li>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-7">
+                        <span class="project-name">When Large Language Models are More Persuasive Than Incentivized Humans, and Why</span>
+                        <span class="project-meta">Schoenegger et al. · 2025</span>
+                    </button>
+                    <a class="project-link" href="https://arxiv.org/abs/2505.09662" aria-label="Open paper">&#8599;</a>
+                    <span class="project-desc" id="pubdesc-7">Participants answered quiz questions for real rewards while a persuader, either a human with a monetary incentive to succeed or an LLM, tried to steer them toward correct or incorrect answers in live conversation. Claude 3.5 Sonnet out-persuaded the incentivized humans in both directions, raising quiz accuracy when arguing for the truth and lowering it when arguing for the wrong answer; a follow-up with DeepSeek v3 replicated the accuracy effects but found an LLM advantage only for deceptive persuasion. Unlike human persuaders, the models' edge also waned over repeated interactions. Linguistic analysis of the transcripts suggests one mechanism: the LLMs express markedly higher conviction than humans do.</span>
+                </li>
+                <li>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-8">
+                        <span class="project-name">AI Agents: Governing Autonomy in the Digital Age</span>
+                        <span class="project-meta">Kwon · Center for AI Policy, 2025</span>
+                    </button>
+                    <a class="project-link" href="https://www.centeraipolicy.org/work/ai-agents-governing-autonomy-in-the-digital-age" aria-label="Open paper">&#8599;</a>
+                    <span class="project-desc" id="pubdesc-8">Autonomous AI agents (systems that plan, use tools, and act with limited supervision) are moving out of research labs and into commercial deployment. This report maps three risks of that transition: catastrophic misuse, as the capabilities that streamline business can also enable cyber-intrusions and lower barriers to dangerous attacks; gradual human disempowerment as decisions shift to opaque systems; and large-scale workforce displacement. It proposes four measures for Congress: an "Autonomy Passport" federal registration system for agents that handle money, control devices, or run code, recording each agent's capabilities, operating domains, and safety testing; continuous oversight with authority to suspend dangerous deployments; mandatory human review of high-consequence decisions; and annual federal reporting on labor-market impacts. The through-line is risk-targeted regulation that protects the public without freezing agent development.</span>
+                </li>
+                <li>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-9">
+                        <span class="project-name">AI at the Cyber Frontier: Securing America's Digital Future</span>
+                        <span class="project-meta">Williams & Kwon · Center for AI Policy, 2025</span>
+                    </button>
+                    <a class="project-link" href="https://www.centeraipolicy.org/work/ai-at-the-cyber-frontier-securing-americas-digital-future" aria-label="Open paper">&#8599;</a>
+                    <span class="project-desc" id="pubdesc-9">A policy report for Congress on how advancing AI capabilities are reshaping the balance between cyber offense and defense. With US cybercrime losses estimated at $452 billion in 2024 and defensive investment lagging, the near-term equilibrium likely favors attackers, but choices by AI developers and Congress could tilt it toward defense. The report lays out five recommendations: a standardized suite of real-world cyber evaluations for AI models built by the US AI Safety Institute and paired with annual red-teaming, expanded funding for cyber-defensive AI including prize challenges like DARPA's AI Cyber Challenge, workforce investment through the Cyber PIVOTT Act and CyberCorps, a commission to fix public-private partnerships, and classifying frontier AI as critical infrastructure with mandatory incident reporting.</span>
+                </li>
+                <li>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-10">
+                        <span class="project-name">Comparing Bottom-Up and Top-Down Steering Approaches on In-Context Learning Tasks</span>
+                        <span class="project-meta">Brumley, Kwon, Krueger, Krasheninnikov, & Anwar · NeurIPS MINT Workshop, 2024</span>
+                    </button>
+                    <a class="project-link" href="https://arxiv.org/abs/2411.07213" aria-label="Open paper">&#8599;</a>
+                    <span class="project-desc" id="pubdesc-10">Interpretability research offers two routes to steering model behavior: bottom-up methods like function vectors and top-down methods like in-context vectors. The branches had seen little quantitative comparison. This case study pits a representative vector steering method from each against a shared set of in-context learning tasks. Neither dominates: in-context vectors prove stronger at broad behavioral shifts, while function vectors do better on tasks demanding precision. The split suggests evaluations of steering methods need to account for task type rather than treating steering as a single capability.</span>
+                </li>
+                <li>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-11">
+                        <span class="project-name">Neuro-Symbolic Models of Human Moral Judgment</span>
+                        <span class="project-meta">Kwon, Levine, & Tenenbaum · CogSci, 2024</span>
+                    </button>
+                    <a class="project-link" href="https://escholarship.org/uc/item/1t2568mw" aria-label="Open paper">&#8599;</a>
+                    <span class="project-desc" id="pubdesc-11">Symbolic models of moral cognition are interpretable and grounded in moral psychology, but they cannot read natural language (every scenario must be hand-translated into a formal specification) while LLMs handle language fluently yet make opaque, unreliable models of human reasoning. This work hybridizes the two: GPT-4 extracts morally relevant features from a vignette, and the feature values feed either a learned regression or theory-driven cognitive models from the moral psychology literature, across three pipelines that vary how much existing theory they lean on. On MoralExceptQA, a benchmark of 148 scenarios probing when people find it permissible to break moral rules, the best hybrid models improve on the previous best (GPT-3.5 with moral chain-of-thought prompting) by roughly 20 F1 points and 18 accuracy points while keeping the judgment process transparent.</span>
+                </li>
+                <li>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-12">
+                        <span class="project-name">Does It Know?: Probing for Uncertainty in Language Model Latent Beliefs</span>
+                        <span class="project-meta">Huang & Kwon · NeurIPS Workshop, 2023</span>
+                    </button>
+                    <a class="project-link" href="https://openreview.net/forum?id=uSvN2oozRK" aria-label="Open paper">&#8599;</a>
+                    <span class="project-desc" id="pubdesc-12">Contrast-Consistent Search reads a true/false "latent belief" off a language model's internal activations with an unsupervised linear probe, but a binary probe has no way to register uncertainty or ambiguity. UCCS extends the method to a three-way classifier (true, false, or uncertain) still trained only on unlabeled data, and using the uncertain class to filter out low-confidence truth predictions improves accuracy across a diverse set of models and tasks. Evaluation is anchored by TYMES, a dataset of true and falsified facts extracted from recent news and paired with timestamps, so intersecting it with a model's training cutoff yields statements that provably postdate what the model could know, a proof-of-concept for benchmarking uncertainty and time-sensitive world knowledge.</span>
+                </li>
+                <li>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-13">
+                        <span class="project-name">Explore, Establish, Exploit: Red Teaming Language Models from Scratch</span>
+                        <span class="project-meta">Casper, Lin, Kwon, Culp, & Hadfield-Menell · 2023</span>
+                    </button>
+                    <a class="project-link" href="https://arxiv.org/abs/2306.09442" aria-label="Open paper">&#8599;</a>
+                    <span class="project-desc" id="pubdesc-13">Automated red-teaming tools typically assume a ready-made classifier for the harmful behavior being hunted, which prevents tailoring attacks to the target model, and if failures were that easy to classify, they could have been filtered out in advance. This work tackles red-teaming from scratch, where the adversary starts with no failure classifier, through three stages: explore the model's range of behaviors, establish a measure of undesired behavior trained on human evaluations, then exploit that measure to search for diverse adversarial prompts. Applied to GPT-3, the pipeline uncovers classes of inputs that elicit false statements and yields CommonClaim, a dataset of 20,000 statements human-labeled as common-knowledge true, false, or neither.</span>
+                </li>
+                <li>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-14">
+                        <span class="project-name">When It's Not Out of Line to Get Out of Line</span>
+                        <span class="project-meta">Kwon, Tan, Tenenbaum, & Levine · CogSci, 2023</span>
+                    </button>
+                    <a class="project-link" href="https://escholarship.org/uc/item/3w59797h" aria-label="Open paper">&#8599;</a>
+                    <span class="project-desc" id="pubdesc-14">How do people decide when it's acceptable to break a moral rule, like leaving a queue to skip ahead? One hypothesis is universalization: alongside outcome-based measures of welfare and harm, people ask what would happen if everyone felt free to ignore the rule. The experiments use a virtual environment where agents queue to gather water; participants judge agents who get out of line to reach the water faster, and an action's universalizability is modeled by simulating every agent heading straight for the water and evaluating the effects. Universalization turns out to play an important role in rule-breaking judgments, operating alongside outcome-based concerns like welfare aggregation and harm.</span>
+                </li>
+                <li>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-15">
+                        <span class="project-name">Values Shape Optimizers Shape Values</span>
+                        <span class="project-meta">Kwon · NeurIPS Human-Centered AI Workshop, 2022</span>
+                    </button>
+                    <a class="project-link" href="https://neurips.cc/virtual/2022/58821" aria-label="Open paper">&#8599;</a>
+                    <span class="project-desc" id="pubdesc-15">AI systems typically optimize proxy objectives for human values (recommender systems maximize engagement metrics as a stand-in for serving entertaining content) while the optimization itself shifts the values it was meant to serve, from nudging political leanings to steering users into particular online communities. Rather than treating value specification and value influence as separate problems, this position piece frames values and optimizers as a single intertwined system in which each continually feeds into and transforms the other. Taking that feedback loop seriously, it argues, is a precondition for building AI that preserves diverse values across individuals and communities.</span>
+                </li>
+                <li>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-16">
+                        <span class="project-name">Forecasting Future World Events With Neural Networks</span>
+                        <span class="project-meta">Zou, Xiao, Jia, Kwon, et al. · NeurIPS, 2022</span>
+                    </button>
+                    <a class="project-link" href="https://arxiv.org/abs/2206.15474" aria-label="Open paper">&#8599;</a>
+                    <span class="project-desc" id="pubdesc-16">Expert human forecasters shape policy on pandemics, conflict, and economics. Can language models do the same job? Autocast is a benchmark of thousands of forecasting questions drawn from real forecasting tournaments, paired with a date-organized news corpus so models can be evaluated under the same information conditions past human forecasters faced, without leakage from the future. A companion dataset, IntervalQA, targets calibration on numerical questions that span orders of magnitude. Language models fall well short of the human expert baseline, though performance improves with model scale and with retrieval from the news corpus.</span>
+                </li>
+                <li>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-17">
+                        <span class="project-name">Scaling Out-of-Distribution Detection for Real-World Settings</span>
+                        <span class="project-meta">Hendrycks, Basart, Mazeika, Zou, Kwon, et al. · ICML, 2022</span>
+                    </button>
+                    <a class="project-link" href="https://arxiv.org/abs/1911.11132" aria-label="Open paper">&#8599;</a>
+                    <span class="project-desc" id="pubdesc-17">Out-of-distribution detection had mostly been studied in small-scale, low-resolution settings that look little like deployment. This work moves the problem to large-scale multiclass, multi-label, and segmentation regimes, building three benchmarks to support it: Species, a dataset of over 700,000 images spanning more than a thousand anomalous species for ImageNet-scale detectors; ImageNet-21K-based evaluations of multi-label detectors on PASCAL VOC and COCO; and an anomaly segmentation benchmark built around road hazards. Across all three settings, a surprisingly simple detector, scoring each input by its maximum logit, outperforms prior methods, establishing a new baseline for realistic OOD detection.</span>
+                </li>
+                <li>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-18">
+                        <span class="project-name">Flexibility in Moral Cognition: When Is It Okay to Break the Rules?</span>
+                        <span class="project-meta">Kwon, Tenenbaum, & Levine · CogSci, 2022</span>
+                    </button>
+                    <a class="project-link" href="https://escholarship.org/uc/item/46r7b6ft" aria-label="Open paper">&#8599;</a>
+                    <span class="project-desc" id="pubdesc-18">Simple rules like "don't cut in line" cannot explain how easily people recognize legitimate exceptions to them. To probe that flexibility, participants watched clips of a video game in which agents queue to gather water from wells and streams, then judged whether an agent who skipped the line acted acceptably, across dynamic and spatio-temporally varied scenes designed so answers could not be memorized from real life. Judgments tracked a generative understanding of the rule's underlying function, roughly whether everyone could cut in the same situation without things going badly, and could not be accounted for by either simple rule adherence or utility maximization.</span>
+                </li>
+                <li>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-19">
+                        <span class="project-name">Social Inferences from Physical Evidence via Bayesian Event Reconstruction</span>
+                        <span class="project-meta">Lopez-Brau, Kwon, & Jara-Ettinger · Journal of Experimental Psychology: General, 2022</span>
+                    </button>
+                    <a class="project-link" href="https://pubmed.ncbi.nlm.nih.gov/35901411/" aria-label="Open paper">&#8599;</a>
+                    <span class="project-desc" id="pubdesc-19">People can make social inferences about agents they never observed. From a small pile of cookie crumbs in a room, they can judge where someone entered and which goal they pursued, and from the position of two piles, whether one or two agents were present. The account proposed here is mental event reconstruction: observers infer the unseen behavior that would have produced the physical evidence, then read social information off the reconstructed events. A computational model embedding this idea in a Bayesian framework for action understanding matches human judgments with high quantitative accuracy across three experiments, and participants' explicitly reconstructed trajectories predict the entry-point and goal inferences made from the evidence alone.</span>
+                </li>
+                <li>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-20">
+                        <span class="project-name">Detecting the Involvement of Agents Through Physical Reasoning</span>
+                        <span class="project-meta">Lopez-Brau, Kwon, McBean, Yildirim, & Jara-Ettinger · CogSci, 2021</span>
+                    </button>
+                    <a class="project-link" href="https://escholarship.org/uc/item/43n9v4z9" aria-label="Open paper">&#8599;</a>
+                    <span class="project-desc" id="pubdesc-20">A stack of rocks encountered in the woods immediately suggests that someone was there. Developmental psychology has attributed this kind of agency detection to a sensitivity to violations of randomness; this work formalizes that idea as a computational model and tests it quantitatively. The model infers agency by estimating how likely a scene is to have arisen naturally, with human intuitive physics instantiated as a physics engine. Human judgments follow suit: agency detection tracks not just a scene's superficial visual properties but its underlying physical generative process, suggesting people use intuitive physics to decide when a scene calls for social reasoning at all.</span>
+                </li>
+                <li>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-21">
+                        <span class="project-name">Mental State Inference from Indirect Evidence Through Bayesian Event Reconstruction</span>
+                        <span class="project-meta">Lopez-Brau, Kwon, & Jara-Ettinger · CogSci, 2020</span>
+                    </button>
+                    <a class="project-link" href="https://cognitivesciencesociety.org/cogsci20/papers/0085/" aria-label="Open paper">&#8599;</a>
+                    <span class="project-desc" id="pubdesc-21">A chewed-up pencil suggests anxiety; an open door suggests someone left in a hurry. People readily attribute mental states to agents they never saw act. This work explains that ability as Bayesian event reconstruction: given a physical trace (a pile of cookie crumbs in a gridworld room), the model jointly infers the absent agent's goal, entry point, and trajectory under a generative model of utility-maximizing action plans. Across two experiments, its predictions quantitatively matched participants' judgments about which goal the agent pursued and which door it entered (r = 0.94), and even how many agents had been in the room (r = 0.78), while cue-based regressions trained directly on the human data fell far short. The results support the idea that Theory of Mind is a generative model of how mental states produce action, one that works even when the actions themselves must be reconstructed.</span>
+                </li>
+                <li>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-22">
+                        <span class="project-name">Lift-the-Flap: What, Where and When for Context Reasoning</span>
+                        <span class="project-meta">Zhang, Tseng, Montejo, Kwon, & Kreiman · 2019</span>
+                    </button>
+                    <a class="project-link" href="https://arxiv.org/abs/1902.00163" aria-label="Open paper">&#8599;</a>
+                    <span class="project-desc" id="pubdesc-22">How much can you infer about an object you cannot see, purely from its surroundings? The lift-the-flap task poses exactly this: identify a target hidden behind a flap in a natural image using only scene context. An online psychophysics experiment records where and when people click to reveal parts of the image, isolating the sampling patterns and visual features that predict accurate contextual inference. Those findings inform an extended recurrent attention model that attends to informative context regions and accumulates evidence across clicks, reaching human-level accuracy while reproducing human-like sampling behavior and learning interpretable contextual features.</span>
+                </li>
+            </ul>
+        </section>
+
+        <section id="journey" class="journey section-divider">
+            <h2>trajectory</h2>
+
+            <div class="timeline">
+                <article class="timeline-entry">
+                    <span class="timeline-era">now</span>
+                    <p>
+                        I'm working at <a href="https://guidelight.ai">Guidelight AI Standards</a>! More details coming soon.
+                    </p>
+                </article>
+
+                <article class="timeline-entry">
+                    <span class="timeline-era">Astra Fellowship</span>
+                    <p>
+                        I worked as a strategy fellow with Tom Davidson (Forethought) and Fabien Roger (Anthropic) on <a href="https://www.forethought.org/research/ai-enabled-coups-how-a-small-group-could-use-ai-to-seize-power#32-secret-ai-loyalties">secretly loyal AI</a>: the risk that an AI system could be deliberately trained to appear aligned with an institution's goals while covertly serving a different actor's interests. I focused on <a href="https://www.formationresearch.com/secret-loyalties-whitepaper.pdf">threat modeling and designing ML experiments</a> that stress-test this scenario and support the broader research agenda.
+                    </p>
+                </article>
+
+                <article class="timeline-entry">
+                    <span class="timeline-era">Center for AI Policy and Centre for the Governance of AI</span>
+                    <p>
+                        In 2025 I moved to DC to work on AI policy and governance: first at the Center for AI Policy, writing reports on AI agents, cybersecurity, and autonomous systems, then GovAI's DC fellowship, working on risks from internal AI deployment and metrics for tracking automated AI R&D. This was refreshing because the questions felt immediately important and impactful. I enjoyed communicating ideas and recommendations to people (tens of thousands read my reports in total), and it led to being invited as a panelist on a Georgetown × World Bank conference on "Making AI Work: What Firms and Workers Need."
+                    </p>
+                </article>
+
+                <article class="timeline-entry">
+                    <span class="timeline-era">activation steering</span>
+                    <p>
+                        I worked with David Krueger's group testing activation steering methods. At the time it was unclear how well these techniques actually worked or where they broke down. We compared bottom-up approaches like function vectors against top-down ones like in-context vectors on shared in-context learning tasks, and found they have different strengths: in-context vectors are better at broad behavioral shifts, function vectors at tasks demanding precision.
+                    </p>
+                </article>
+
+                <article class="timeline-entry">
+                    <span class="timeline-era">LG AI Research</span>
+                    <p>
+                        In 2023 I was a research engineer on multi-lingual LLMs under Honglak Lee, working with Lajanugen Logeswaran, Dongsub Shim, and Tolga Ergen. Synthetic data, pretraining, finetuning, evals. One thread I liked: leveraging language-invariant concepts so models can learn new languages more efficiently.
+                    </p>
+                </article>
+
+                <article class="timeline-entry">
+                    <span class="timeline-era">MIT</span>
+                    <p>
+                        After college I joined Josh Tenenbaum's Computational Cognitive Science Lab, working closely with Sydney Levine on moral cognition: how people reason about rules, norms, and each other. We built models that tried to capture the structure of moral judgment, something I think matters for AI alignment too. Separately, I worked with Stephen Casper and Dylan Hadfield-Menell on red-teaming methods for systematically finding where language models fail.
+                    </p>
+                </article>
+
+                <article class="timeline-entry">
+                    <span class="timeline-era">early AI safety</span>
+                    <p>
+                        Around 2020 I started paying attention to the surprising capabilities emerging in AI systems. I worked on one of OpenAI's early RLHF projects under Long Ouyang and Jeff Wu. It was my first hands-on experience with LLMs, and it got me scaling pilled. Then at Berkeley with Jacob Steinhardt and Dan Hendrycks, I worked on out-of-distribution detection, AI forecasting, and building evaluations for ML systems.
+                    </p>
+                </article>
+
+                <article class="timeline-entry">
+                    <span class="timeline-era">Yale</span>
+                    <p>
+                        Studied CS and psychology. The summer before sophomore year, I worked with Gabriel Kreiman and Mengmi Zhang at Harvard/MIT Center for Brains, Minds, and Machines on visual cognition and context reasoning. It was my first research experience and I'm grateful they invested their time in a mostly floundering freshman. During school I worked in Julian Jara-Ettinger's lab, building computational models of social cognition.
+                    </p>
+                </article>
+
+                <article class="timeline-entry">
+                    <span class="timeline-era">pre-college</span>
+                    <p>
+                        Mostly spent my time hanging out with friends and consuming a ton of content online. I was pretty directionless: no real sense of what I ultimately cared about or wanted to pursue, just chasing whatever felt good in the moment, not anchored to any ideals. But experiencing CTY and Canada/USA Mathcamp was special and invigorating. They were the first environments where I felt intellectually excited about ideas and the people around me.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section id="misc" class="misc section-divider">
+            <h2>rabbit holes</h2>
+
+            <details class="misc-category">
+                <summary>reading</summary>
+                <ul class="misc-list compact">
+                    <li>The Gentle Romance: Stories of AI and humanity — Richard Ngo</li>
+                    <li>The Night Circus — Erin Morgenstern</li>
+                    <li>The Book of Five Rings — Miyamoto Musashi</li>
+                </ul>
+            </details>
+
+            <details class="misc-category">
+                <summary>listening</summary>
+                <div class="listening-grid">
+                    <div class="genre-group">
+                        <span class="genre-label">hip hop</span>
+                        <div class="album-item">
+                            <span class="album-name">I LAY DOWN MY LIFE FOR YOU</span>
+                            <span class="album-artist">JPEGMAFIA</span>
+                            <span class="album-genre">experimental / industrial</span>
+                        </div>
+                        <div class="album-item">
+                            <span class="album-name">LP! (Offline)</span>
+                            <span class="album-artist">JPEGMAFIA</span>
+                            <span class="album-genre">experimental / glitch</span>
+                        </div>
+                    </div>
+                    <div class="genre-group">
+                        <span class="genre-label">jazz(y)</span>
+                        <div class="album-item">
+                            <span class="album-name">The Black Saint and the Sinner Lady</span>
+                            <span class="album-artist">Charles Mingus</span>
+                            <span class="album-genre">avant-garde</span>
+                        </div>
+                        <div class="album-item">
+                            <span class="album-name">Hot Rats</span>
+                            <span class="album-artist">Frank Zappa</span>
+                            <span class="album-genre">jazz-rock</span>
+                        </div>
+                    </div>
+                    <div class="genre-group">
+                        <span class="genre-label">art pop</span>
+                        <div class="album-item">
+                            <span class="album-name">LUX</span>
+                            <span class="album-artist">Rosalía</span>
+                            <span class="album-genre">orchestral</span>
+                        </div>
+                        <div class="album-item">
+                            <span class="album-name">La Vida Era Más Corta</span>
+                            <span class="album-artist">Milo j</span>
+                            <span class="album-genre">contemporary folk</span>
+                        </div>
+                        <div class="album-item">
+                            <span class="album-name">Vanisher, Horizon Scraper</span>
+                            <span class="album-artist">Quadeca</span>
+                            <span class="album-genre">folktronica</span>
+                        </div>
+                    </div>
+                    <div class="genre-group">
+                        <span class="genre-label">electronic</span>
+                        <div class="album-item">
+                            <span class="album-name">I Love My Computer</span>
+                            <span class="album-artist">Ninajirachi</span>
+                            <span class="album-genre">house / dance / pop</span>
+                        </div>
+                        <div class="album-item">
+                            <span class="album-name">Allbarone</span>
+                            <span class="album-artist">Baxter Dury</span>
+                            <span class="album-genre">synth pop / electropop</span>
+                        </div>
+                        <div class="album-item">
+                            <span class="album-name">The Provocateur</span>
+                            <span class="album-artist">ADÉLA</span>
+                            <span class="album-genre">pop / dance / house</span>
+                        </div>
+                    </div>
+                    <div class="genre-group">
+                        <span class="genre-label">rock</span>
+                        <div class="album-item">
+                            <span class="album-name">Fetch</span>
+                            <span class="album-artist">Melt-Banana</span>
+                            <span class="album-genre">noise / experimental</span>
+                        </div>
+                        <div class="album-item">
+                            <span class="album-name">Pain to Power</span>
+                            <span class="album-artist">Maruja</span>
+                            <span class="album-genre">post-punk / jazz</span>
+                        </div>
+                    </div>
+                </div>
+            </details>
+
+            <details class="misc-category">
+                <summary>looking</summary>
+                <p class="misc-note">Updating soon.</p>
+            </details>
+
+            <details class="misc-category">
+                <summary>bookmarks</summary>
+                <ul class="misc-list compact">
+                    <li class="misc-note-inline">More coming soon.</li>
+                    <li><a href="https://www.omarchishti.com/">Omar Chishti</a></li>
+                    <li><a href="https://hoyeonchang.github.io/">Hoyeon Chang</a></li>
+                </ul>
+            </details>
+        </section>
+
+        <footer id="contact">
+            <p>Say hello</p>
+            <nav class="links" aria-label="Contact links">
+                <a href="mailto:joekwon333@gmail.com">Email</a>
+                <a href="https://www.linkedin.com/in/joe-k-5ba472119/">LinkedIn</a>
+                <a href="https://x.com/joemkwon">Twitter</a>
+                <a href="https://unfancy.substack.com/">Substack</a>
+                <a href="https://www.albumoftheyear.org/user/kwon/ratings/highest/">AOTY</a>
+            </nav>
+
+            <div class="bg-controls" role="group" aria-label="Background style">
+                <button class="bg-toggle active" data-mode="ocean" aria-pressed="true">ocean</button>
+                <button class="bg-toggle" data-mode="fractal" aria-pressed="false">fractal</button>
+                <button class="bg-toggle" data-mode="flow" aria-pressed="false">flow</button>
+                <button class="bg-toggle" data-mode="constellation" aria-pressed="false">constellation</button>
+                <button class="bg-toggle" data-mode="lorenz" aria-pressed="false">lorenz</button>
+                <button class="bg-toggle" data-mode="voronoi" aria-pressed="false">voronoi</button>
+                <button class="bg-toggle" data-mode="lissajous" aria-pressed="false">lissajous</button>
+                <button class="bg-toggle" data-mode="off" aria-pressed="false">off</button>
+            </div>
+
+            <p class="colophon">
+                My favorite color is the blue you see when you're on a boat and the
+                seafloor drops away into nothing, that moment where the water goes from
+                turquoise to something almost black and you realize there's a mile of
+                water beneath you and it's beautiful and terrifying.
+                Gerstner waves and perspective fade. Caustics from light bending through
+                surfaces.
+            </p>
+        </footer>
+    </main>
+
+    <script src="script.js"></script>
+    <script data-goatcounter="https://joekwon.goatcounter.com/count"
+            async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
