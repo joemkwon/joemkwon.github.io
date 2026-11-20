@@ -517,84 +517,6 @@ footer::before {
     letter-spacing: 0.02em;
 }
 
-/* === Writing & talks === */
-.list-label {
-    display: block;
-    font-family: 'Syne', sans-serif;
-    font-size: 0.7rem;
-    font-weight: 500;
-    color: var(--text-tertiary);
-    letter-spacing: 0.06em;
-    text-transform: lowercase;
-    margin-bottom: 0.4rem;
-}
-
-.link-list + .list-label {
-    margin-top: 2.25rem;
-}
-
-.link-list {
-    list-style: none;
-    border-bottom: 1px solid var(--border);
-}
-
-.link-list li {
-    border-top: 1px solid var(--border);
-}
-
-/* Each row is one link out */
-.link-list a {
-    display: block;
-    position: relative;
-    padding: 0.85rem 2.5rem 0.85rem 0;
-    color: inherit;
-    text-decoration: none;
-    transition: transform 0.3s ease;
-}
-
-.link-list a::after {
-    content: '\2197';
-    /* alt-text syntax keeps the arrow out of screen-reader output where supported */
-    content: '\2197' / '';
-    position: absolute;
-    top: 0.8rem;
-    right: 0.5rem;
-    font-family: 'Syne', sans-serif;
-    font-size: 1rem;
-    line-height: 1.45;
-    color: var(--text-tertiary);
-    transition: color 0.3s ease;
-}
-
-.link-title {
-    display: block;
-    font-family: 'Syne', sans-serif;
-    font-weight: 500;
-    font-size: 0.95rem;
-    line-height: 1.45;
-    transition: color 0.3s ease;
-}
-
-.link-meta {
-    display: block;
-    font-family: 'Syne', sans-serif;
-    font-size: 0.75rem;
-    color: var(--text-tertiary);
-    margin-top: 0.25rem;
-    letter-spacing: 0.02em;
-}
-
-@media (hover: hover) {
-    .link-list a:hover {
-        transform: translateX(0.75rem);
-    }
-
-    .link-list a:hover .link-title,
-    .link-list a:hover::after {
-        color: var(--accent);
-    }
-}
-
 /* === Journey / Timeline === */
 .journey {
     /* margin handled by section-divider */
@@ -1066,11 +988,6 @@ footer {
         padding: 1.25rem 0.75rem 2rem;
     }
 
-    /* Five links fit a phone; the sixth comes back on wider screens */
-    .top-nav .nav-wide {
-        display: none;
-    }
-
     main {
         padding: 7rem 1.5rem 4rem;
     }
@@ -1240,8 +1157,7 @@ summary:focus-visible {
         display: block;
     }
 
-    .project-link,
-    .link-list a::after {
+    .project-link {
         display: none;
     }
 
