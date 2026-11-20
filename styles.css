@@ -34,10 +34,11 @@
 }
 
 :root {
+    color-scheme: dark; /* dark scrollbars and form controls to match the page */
     --bg: #080d12;
     --bg-subtle: #0c1318;
     --text: #D5DAE1;
-    --text-secondary: #7A8088;
+    --text-secondary: #8B929B; /* long-form text: ~6:1 on --bg, and above 4.5:1 even where the animated backdrop is brightest */
     --text-tertiary: #7E8794; /* keeps ≥4.5:1 (WCAG AA) on --bg and --bg-subtle */
     --accent: #9AB0C8;
     --accent-subtle: #6A7A8A;
@@ -45,7 +46,7 @@
 }
 
 html {
-    font-size: 18px;
+    font-size: 112.5%; /* 18px at the browser default, and it follows the reader's own text-size setting */
     scroll-behavior: smooth;
 }
 
@@ -104,10 +105,12 @@ body {
     right: 0;
     display: flex;
     justify-content: center;
-    gap: 3rem;
-    padding: 1.5rem 2rem;
-    background: linear-gradient(to bottom, var(--bg) 40%, transparent);
+    gap: clamp(1rem, 4.5vw, 3rem);
+    padding: 1.5rem 1rem 2.25rem;
+    /* Solid behind the links and fading out below them, so scrolled text never shows through the labels */
+    background: linear-gradient(to bottom, var(--bg) 0%, var(--bg) 58%, transparent);
     z-index: 100;
+    pointer-events: none; /* the faded strip must not swallow clicks; the links opt back in */
 }
 
 .top-nav a {
@@ -119,6 +122,8 @@ body {
     transition: color 0.3s ease;
     letter-spacing: 0.04em;
     text-transform: lowercase;
+    white-space: nowrap;
+    pointer-events: auto;
 }
 
 .top-nav a:hover {
@@ -139,6 +144,13 @@ section {
 /* Keep anchor targets clear of the fixed nav */
 section,
 footer {
+    scroll-margin-top: 5rem;
+}
+
+/* Old section links (#journey, #misc) still land in the right place */
+.legacy-anchor {
+    position: absolute;
+    top: 0;
     scroll-margin-top: 5rem;
 }
 
@@ -265,7 +277,8 @@ p:last-child {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
+    height: 100lvh; /* the tall viewport: its size does not change when mobile toolbars slide in and out */
     pointer-events: none;
     z-index: 0;
     opacity: 0.6;
@@ -359,8 +372,10 @@ footer::before {
 /* === Projects === */
 .work-header {
     display: flex;
+    flex-wrap: wrap;
     align-items: baseline;
     justify-content: space-between;
+    gap: 0.75rem 1rem;
     margin-bottom: 1.5rem;
 }
 
@@ -370,6 +385,7 @@ footer::before {
 
 .work-controls {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.25rem;
     background: var(--bg-subtle);
     border-radius: 4px;
@@ -401,24 +417,22 @@ footer::before {
 
 .project-list {
     list-style: none;
+    border-bottom: 1px solid var(--border); /* on the list itself, so it closes whichever entry is last under a filter */
 }
 
 .project-list li {
     position: relative;
     border-top: 1px solid var(--border);
+    scroll-margin-top: 6rem; /* a linked paper lands below the fixed nav */
 }
 
-.project-list li:last-child {
-    border-bottom: 1px solid var(--border);
-}
-
-/* "recent" view: show only the first three entries of the single list */
-.project-list.recent-mode li:nth-child(n+4) {
+/* Filters: the list's data-filter decides which entries show.
+   "selected" is the default view; "all" has no rule, so it shows everything. */
+.project-list[data-filter="selected"] li:not([data-selected]),
+.project-list[data-filter="governance"] li:not([data-topics~="governance"]),
+.project-list[data-filter="safety"] li:not([data-topics~="safety"]),
+.project-list[data-filter="cogsci"] li:not([data-topics~="cogsci"]) {
     display: none;
-}
-
-.project-list.recent-mode li:nth-child(3) {
-    border-bottom: 1px solid var(--border);
 }
 
 /* The whole row toggles the summary */
@@ -432,14 +446,21 @@ footer::before {
     color: inherit;
     padding: 1.25rem 2.5rem 1.25rem 0;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease;
 }
 
-.project-toggle:hover {
-    padding-left: 0.75rem;
+/* The hover nudge is a transform, not padding: padding re-wrapped long titles and
+   made the list jump. Only where hover is real, so it does not stick after a tap. */
+@media (hover: hover) {
+    .project-toggle:hover {
+        transform: translateX(0.75rem);
+    }
+
+    .project-toggle:hover .project-name {
+        color: var(--accent);
+    }
 }
 
-.project-toggle:hover .project-name,
 .project-list li.open .project-name {
     color: var(--accent);
 }
@@ -494,6 +515,84 @@ footer::before {
     color: var(--text-tertiary);
     margin-top: 0.4rem;
     letter-spacing: 0.02em;
+}
+
+/* === Writing & talks === */
+.list-label {
+    display: block;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+    margin-bottom: 0.4rem;
+}
+
+.link-list + .list-label {
+    margin-top: 2.25rem;
+}
+
+.link-list {
+    list-style: none;
+    border-bottom: 1px solid var(--border);
+}
+
+.link-list li {
+    border-top: 1px solid var(--border);
+}
+
+/* Each row is one link out */
+.link-list a {
+    display: block;
+    position: relative;
+    padding: 0.85rem 2.5rem 0.85rem 0;
+    color: inherit;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.link-list a::after {
+    content: '\2197';
+    /* alt-text syntax keeps the arrow out of screen-reader output where supported */
+    content: '\2197' / '';
+    position: absolute;
+    top: 0.8rem;
+    right: 0.5rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    line-height: 1.45;
+    color: var(--text-tertiary);
+    transition: color 0.3s ease;
+}
+
+.link-title {
+    display: block;
+    font-family: 'Syne', sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    transition: color 0.3s ease;
+}
+
+.link-meta {
+    display: block;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    margin-top: 0.25rem;
+    letter-spacing: 0.02em;
+}
+
+@media (hover: hover) {
+    .link-list a:hover {
+        transform: translateX(0.75rem);
+    }
+
+    .link-list a:hover .link-title,
+    .link-list a:hover::after {
+        color: var(--accent);
+    }
 }
 
 /* === Journey / Timeline === */
@@ -730,6 +829,7 @@ footer::before {
     font-size: 0.8rem;
     color: var(--text);
     margin-top: 0.3rem;
+    padding: 0.7rem 0 0.5rem calc(1rem + var(--depth, 0) * 0.6rem); /* lines up with the lists in the other categories */
     line-height: 1.5;
     opacity: 0.7;
 }
@@ -795,7 +895,8 @@ footer::before {
     white-space: nowrap;
 }
 
-.album-item:hover .album-genre {
+.album-item:hover .album-genre,
+.misc-category:focus-within .album-genre { /* keyboard users get the genres too */
     opacity: 1;
 }
 
@@ -957,12 +1058,17 @@ footer {
 /* === Responsive === */
 @media (max-width: 640px) {
     html {
-        font-size: 16px;
+        font-size: 100%;
     }
 
     .top-nav {
-        gap: 2rem;
-        padding: 1.25rem 1.5rem;
+        gap: clamp(0.6rem, 4.6vw, 2rem);
+        padding: 1.25rem 0.75rem 2rem;
+    }
+
+    /* Five links fit a phone; the sixth comes back on wider screens */
+    .top-nav .nav-wide {
+        display: none;
     }
 
     main {
@@ -980,6 +1086,26 @@ footer {
     /* No hover on touch: show album genres statically */
     .album-genre {
         opacity: 1;
+    }
+
+    /* Albums: title and artist run on as one line of text with the genre underneath.
+       Three columns side by side squeezed titles down to a word per line. */
+    .album-item {
+        display: block;
+    }
+
+    .album-artist {
+        white-space: nowrap; /* keeps the dash with the artist's name when the line breaks */
+    }
+
+    .album-artist::before {
+        margin-left: 0.5rem;
+    }
+
+    .album-genre {
+        display: block;
+        margin-left: 0;
+        white-space: normal;
     }
 
     .links {
@@ -1015,10 +1141,35 @@ footer {
     }
 }
 
-/* Hover is unavailable on touch devices: show album genres statically */
+/* Very narrow phones (320px wide): keep the nav inside the screen and the name clear of the portrait */
+@media (max-width: 360px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    .hero-portrait {
+        width: 104px;
+        height: 104px;
+    }
+
+    .tagline {
+        max-width: calc(100% - 116px);
+    }
+
+    .top-nav a {
+        font-size: 0.74rem;
+        letter-spacing: 0.02em;
+    }
+}
+
+/* Hover is unavailable on touch devices: show album genres statically, and no cursor glow */
 @media (hover: none) {
     .album-genre {
         opacity: 1;
+    }
+
+    .cursor-glow {
+        display: none;
     }
 }
 
@@ -1054,6 +1205,7 @@ summary:focus-visible {
 /* === Print === */
 @media print {
     :root {
+        color-scheme: light;
         --bg: #ffffff;
         --bg-subtle: #f2f2f2;
         --text: #111111;
@@ -1079,21 +1231,45 @@ summary:focus-visible {
         padding-top: 2rem;
     }
 
-    /* Print the full publication list with all summaries expanded */
-    .project-list.recent-mode li:nth-child(n+4) {
-        display: list-item;
-    }
-
-    .project-list.recent-mode li:nth-child(3) {
-        border-bottom: none;
+    /* Print the full publication list, whatever filter is on, with all summaries expanded */
+    .project-list li {
+        display: list-item !important;
     }
 
     .project-desc {
         display: block;
     }
 
-    .project-link {
+    .project-link,
+    .link-list a::after {
         display: none;
+    }
+
+    /* On screen the name is drawn with a clipped background; printers drop backgrounds,
+       which left the name invisible */
+    .gradient-text {
+        background: none;
+        -webkit-text-fill-color: currentColor;
+        animation: none;
+    }
+
+    /* Let the portrait sit beside the heading instead of over the text below it */
+    .hero-portrait {
+        position: static;
+        float: right;
+        width: 150px;
+        height: 150px;
+        margin: 0 0 1rem 1.5rem;
+    }
+
+    .hero::after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+
+    .tagline {
+        max-width: none;
     }
 }
 

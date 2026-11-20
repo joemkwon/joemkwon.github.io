@@ -62,59 +62,99 @@ bioToggles.forEach(toggle => {
     });
 });
 
-// Work view toggle: one list; "recent" hides everything after the third entry
+// Work filters: one list; the active filter is a data attribute that the CSS reads
 const workToggles = document.querySelectorAll('.work-toggle');
 const projectList = document.querySelector('.project-list');
 
-workToggles.forEach(toggle => {
-    toggle.addEventListener('click', () => {
-        workToggles.forEach(t => {
-            const active = t === toggle;
-            t.classList.toggle('active', active);
-            t.setAttribute('aria-pressed', active);
-        });
-        projectList.classList.toggle('recent-mode', toggle.dataset.view === 'recent');
+function setWorkFilter(filter) {
+    projectList.dataset.filter = filter;
+    workToggles.forEach(t => {
+        const active = t.dataset.filter === filter;
+        t.classList.toggle('active', active);
+        t.setAttribute('aria-pressed', active);
     });
+}
+
+workToggles.forEach(toggle => {
+    toggle.addEventListener('click', () => setWorkFilter(toggle.dataset.filter));
 });
 
 // Per-paper summary expand/collapse (the whole title row toggles)
+function setPaperOpen(li, open) {
+    li.classList.toggle('open', open);
+    li.querySelector('.project-toggle').setAttribute('aria-expanded', open);
+}
+
 document.querySelectorAll('.project-toggle').forEach(btn => {
     btn.addEventListener('click', () => {
-        const open = btn.closest('li').classList.toggle('open');
-        btn.setAttribute('aria-expanded', open);
+        const li = btn.closest('li');
+        const open = !li.classList.contains('open');
+        setPaperOpen(li, open);
+        // Keep the address bar pointing at the open paper, so the link can be copied and shared
+        if (!li.id) return;
+        if (open) {
+            history.replaceState(null, '', '#' + li.id);
+        } else if (location.hash === '#' + li.id) {
+            history.replaceState(null, '', location.pathname + location.search);
+        }
     });
 });
 
-// Cursor glow effect
+// Arriving on a paper's link (#its-id): make sure it is listed, open it, scroll to it
+function showLinkedPaper() {
+    let id = location.hash.slice(1);
+    if (!id) return;
+    try { id = decodeURIComponent(id); } catch (e) { return; }
+    const li = document.getElementById(id);
+    if (!li || li.parentElement !== projectList) return;
+    if (getComputedStyle(li).display === 'none') setWorkFilter('all');
+    setPaperOpen(li, true);
+    li.scrollIntoView();
+}
+
+showLinkedPaper();
+window.addEventListener('hashchange', showLinkedPaper);
+
+// Pointer tracking and cursor glow.
+// Only a real mouse (or pen) counts. Taps on a touch screen also fire mouse
+// events, which used to park the glow, and the backgrounds' pointer effects,
+// wherever the visitor last tapped.
 const cursorGlow = document.querySelector('.cursor-glow');
 let mouseX = window.innerWidth / 2;
 let mouseY = window.innerHeight / 2;
+let pointerActive = false; // true while a mouse is over the page
 let glowX = mouseX, glowY = mouseY;
+let glowPlaced = false;
+let glowLoopRunning = false;
 
-let glowLoopStarted = false;
-
-document.addEventListener('mousemove', (e) => {
+document.addEventListener('pointermove', (e) => {
+    if (e.pointerType === 'touch') return;
     mouseX = e.clientX;
     mouseY = e.clientY;
+    pointerActive = true;
     if (reducedMotion) return;
     cursorGlow.classList.add('active');
-    // Start the follow loop lazily so touch devices never pay for it
-    if (!glowLoopStarted) {
-        glowLoopStarted = true;
+    if (!glowPlaced) {
+        glowPlaced = true;
         glowX = mouseX;
         glowY = mouseY;
-        animateGlow();
+    }
+    // The follow loop only runs while the glow is still catching up
+    if (!glowLoopRunning) {
+        glowLoopRunning = true;
+        requestAnimationFrame(animateGlow);
     }
 });
 
 document.addEventListener('mouseleave', () => {
+    pointerActive = false;
     cursorGlow.classList.remove('active');
 });
 
 function animateGlow() {
     // Stop (and allow a later restart) if the motion preference flips mid-session
     if (reducedMotion) {
-        glowLoopStarted = false;
+        glowLoopRunning = false;
         return;
     }
     const speed = 0.08;
@@ -122,6 +162,11 @@ function animateGlow() {
     glowY += (mouseY - glowY) * speed;
     cursorGlow.style.left = glowX + 'px';
     cursorGlow.style.top = glowY + 'px';
+    // Caught up: rest until the mouse moves again
+    if (Math.abs(mouseX - glowX) < 0.1 && Math.abs(mouseY - glowY) < 0.1) {
+        glowLoopRunning = false;
+        return;
+    }
     requestAnimationFrame(animateGlow);
 }
 
@@ -136,6 +181,9 @@ let width, height;
 let time = 0;
 let animationId = null;
 let currentMode = 'ocean';
+// How many 60-per-second steps one drawn step stands for. Normally 1; the load
+// governor (near the end of this file) raises it on machines that struggle.
+let simScale = 1;
 
 // Colophon descriptions for each mode
 const colophonTexts = {
@@ -200,7 +248,13 @@ function selectRandomPalette() {
     colorTime = Math.random() * 1000; // Randomize starting color position
 }
 
+let cachedColors = null;
+let cachedColorTime = -1;
+
 function getCurrentColors() {
+    // Asked for many times a frame; the answer only changes when colorTime does
+    if (colorTime === cachedColorTime) return cachedColors;
+
     // Slowly cycle through all palettes
     const t = colorTime * COLOR_CYCLE_SPEED;
     const paletteIndex = t % COLOR_PALETTES.length;
@@ -223,7 +277,9 @@ function getCurrentColors() {
         current.accent[2] + (next.accent[2] - current.accent[2]) * blend,
     ];
 
-    return { primary, accent };
+    cachedColorTime = colorTime;
+    cachedColors = { primary, accent };
+    return cachedColors;
 }
 
 function getColor(alpha, useAccent = false, variation = 0) {
@@ -300,6 +356,39 @@ class Noise {
 
 let noise = new Noise();
 
+// Draw a trail whose opacity ramps up toward its newest point. Segments are
+// grouped into a few opacity bands and each band is stroked once, instead of
+// one stroke (and one colour string) per segment: the same picture for a small
+// fraction of the canvas calls. accentOf(i) says which palette colour segment i uses.
+const TRAIL_BANDS = 24;
+
+function strokeFadingTrail(ctx, points, maxAlpha, hue, accentOf) {
+    const n = points.length;
+    if (n < 2) return;
+    ctx.lineWidth = 0.8;
+    for (let band = 0; band < TRAIL_BANDS; band++) {
+        const from = Math.max(1, Math.floor(band * n / TRAIL_BANDS));
+        const to = Math.floor((band + 1) * n / TRAIL_BANDS);
+        if (to <= from) continue;
+        const alpha = Math.min(1, ((from + to - 1) / 2 / n) * maxAlpha);
+        for (let pass = 0; pass < 2; pass++) {
+            const accent = pass === 0;
+            let any = false;
+            ctx.beginPath();
+            for (let i = from; i < to; i++) {
+                if (accentOf(i) !== accent) continue;
+                ctx.moveTo(points[i - 1].x, points[i - 1].y);
+                ctx.lineTo(points[i].x, points[i].y);
+                any = true;
+            }
+            if (any) {
+                ctx.strokeStyle = getColor(alpha, accent, hue);
+                ctx.stroke();
+            }
+        }
+    }
+}
+
 // ========================================
 // MODE 1: Curl Noise Flow Field
 // ========================================
@@ -354,13 +443,21 @@ class FlowParticle {
 
         const curl = curlNoise(this.x, this.y, t);
 
-        const dx = mouseX - this.x;
-        const dy = mouseY - this.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        const influence = Math.max(0, 1 - dist / 250) * 0.15;
+        // Gentle pull toward the mouse, only while one is over the page
+        let pullX = 0, pullY = 0;
+        if (pointerActive) {
+            const dx = mouseX - this.x;
+            const dy = mouseY - this.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist > 0 && dist < 250) {
+                const influence = (1 - dist / 250) * 0.15;
+                pullX = dx * influence / dist * 0.5;
+                pullY = dy * influence / dist * 0.5;
+            }
+        }
 
-        this.x += (curl.x + dx * influence / dist * 0.5) * this.speed;
-        this.y += (curl.y + dy * influence / dist * 0.5) * this.speed;
+        this.x += (curl.x + pullX) * this.speed;
+        this.y += (curl.y + pullY) * this.speed;
         this.life--;
 
         if (this.x < -50 || this.x > width + 50 ||
@@ -474,7 +571,7 @@ class Star {
         const dx = this.x - mouseX;
         const dy = this.y - mouseY;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 100 && dist > 0) {
+        if (pointerActive && dist < 100 && dist > 0) {
             const force = (100 - dist) / 100 * 0.1;
             this.vx += (dx / dist) * force * 0.01;
             this.vy += (dy / dist) * force * 0.01;
@@ -595,18 +692,7 @@ class LorenzTrail {
     }
 
     draw(ctx) {
-        if (this.points.length < 2) return;
-
-        for (let i = 1; i < this.points.length; i++) {
-            const alpha = (i / this.points.length) * 0.14;
-
-            ctx.beginPath();
-            ctx.moveTo(this.points[i - 1].x, this.points[i - 1].y);
-            ctx.lineTo(this.points[i].x, this.points[i].y);
-            ctx.strokeStyle = getColor(alpha, i % 2 === 0, this.hueOffset);
-            ctx.lineWidth = 0.8;
-            ctx.stroke();
-        }
+        strokeFadingTrail(ctx, this.points, 0.14 * simScale, this.hueOffset, i => i % 2 === 0);
     }
 }
 
@@ -628,11 +714,12 @@ function initLorenz() {
 }
 
 function animateLorenz() {
-    lorenzTrailCtx.fillStyle = 'rgba(8, 13, 18, 0.025)';
+    // simScale > 1 means this one drawn step stands for several: fade and advance to match
+    lorenzTrailCtx.fillStyle = `rgba(8, 13, 18, ${1 - Math.pow(0.975, simScale)})`;
     lorenzTrailCtx.fillRect(0, 0, width, height);
 
     lorenzPoints.forEach(trail => {
-        trail.update();
+        for (let k = 0; k < simScale; k++) trail.update();
         trail.draw(lorenzTrailCtx);
     });
 
@@ -673,7 +760,7 @@ class VoronoiPoint {
         const dx = mouseX - this.x;
         const dy = mouseY - this.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 150 && dist > 0) {
+        if (pointerActive && dist < 150 && dist > 0) {
             const force = (150 - dist) / 150;
             this.x -= (dx / dist) * force * 0.5;
             this.y -= (dy / dist) * force * 0.5;
@@ -909,18 +996,7 @@ class LissajousCurve {
     }
 
     draw(ctx) {
-        if (this.points.length < 2) return;
-
-        for (let i = 1; i < this.points.length; i++) {
-            const alpha = (i / this.points.length) * 0.12;
-
-            ctx.beginPath();
-            ctx.moveTo(this.points[i - 1].x, this.points[i - 1].y);
-            ctx.lineTo(this.points[i].x, this.points[i].y);
-            ctx.strokeStyle = getColor(alpha, this.useAccent, this.hueShift);
-            ctx.lineWidth = 0.8;
-            ctx.stroke();
-        }
+        strokeFadingTrail(ctx, this.points, 0.12 * simScale, this.hueShift, () => this.useAccent);
     }
 }
 
@@ -950,11 +1026,11 @@ function initLissajous() {
 }
 
 function animateLissajous() {
-    lissajousTrailCtx.fillStyle = 'rgba(8, 13, 18, 0.02)';
+    lissajousTrailCtx.fillStyle = `rgba(8, 13, 18, ${1 - Math.pow(0.98, simScale)})`;
     lissajousTrailCtx.fillRect(0, 0, width, height);
 
     lissajousCurves.forEach(curve => {
-        curve.update();
+        for (let k = 0; k < simScale; k++) curve.update();
         curve.draw(lissajousTrailCtx);
     });
 
@@ -965,8 +1041,21 @@ function animateLissajous() {
 // MODE 6: Ocean Currents
 // ========================================
 
+// This is the background every visitor gets, so it is written to be cheap.
+// A wave's phase at a point is (x * frequency) plus a term that is constant
+// along the stroke, so the sines and cosines of the x part are tabulated once
+// per layer and each point costs a handful of multiplications instead of seven
+// trig calls. Strokes are sampled at a capped number of points rather than
+// every 7px, which bounds the work on large screens; the curves are far
+// smoother than that spacing, so the picture is the same.
+
 let oceanLayers = [];
 let oceanTime = 0;
+let oceanMaxSamples = 110;                 // points per stroke, at most
+let oceanXs = new Float64Array(0);         // sample x positions, shared by every stroke
+let oceanSwellX = new Float64Array(0);     // per frame: slow horizontal swell at each x
+let oceanDriftSin = new Float64Array(0);   // per frame: sin/cos of the drift term's x part
+let oceanDriftCos = new Float64Array(0);
 
 class OceanLayer {
     constructor(depth, index, total) {
@@ -989,6 +1078,20 @@ class OceanLayer {
         // Gerstner steepness for horizontal bunching at crests
         this.steepness = 0.35 + Math.random() * 0.2;
     }
+
+    // sin/cos of the x-dependent part of each of the three wave components
+    buildTables(xs) {
+        const n = xs.length;
+        this.sin1 = new Float64Array(n); this.cos1 = new Float64Array(n); // main wave
+        this.sin2 = new Float64Array(n); this.cos2 = new Float64Array(n); // 2.2x harmonic
+        this.sin3 = new Float64Array(n); this.cos3 = new Float64Array(n); // half-frequency swell
+        for (let j = 0; j < n; j++) {
+            const a = xs[j] * this.frequency;
+            this.sin1[j] = Math.sin(a);       this.cos1[j] = Math.cos(a);
+            this.sin2[j] = Math.sin(a * 2.2); this.cos2[j] = Math.cos(a * 2.2);
+            this.sin3[j] = Math.sin(a * 0.5); this.cos3[j] = Math.cos(a * 0.5);
+        }
+    }
 }
 
 function initOcean() {
@@ -998,18 +1101,43 @@ function initOcean() {
         oceanLayers.push(new OceanLayer(i / (numLayers - 1), i, numLayers));
     }
     oceanTime = Math.random() * 1000;
+
+    // Strokes run from x = -10 to just past the right edge
+    const span = width + 30;
+    const step = Math.max(7, span / oceanMaxSamples);
+    const n = Math.ceil(span / step) + 1;
+    oceanXs = new Float64Array(n);
+    for (let j = 0; j < n; j++) oceanXs[j] = -10 + j * step;
+    oceanSwellX = new Float64Array(n);
+    oceanDriftSin = new Float64Array(n);
+    oceanDriftCos = new Float64Array(n);
+    oceanLayers.forEach(layer => layer.buildTables(oceanXs));
 }
 
 function animateOcean() {
-    ctx.fillStyle = 'rgba(8, 13, 18, 0.05)';
+    // simScale > 1 means this one drawn step stands for several (see the load
+    // governor): fade, advance and draw to match, so the motion looks the same
+    ctx.fillStyle = `rgba(8, 13, 18, ${1 - Math.pow(0.95, simScale)})`;
     ctx.fillRect(0, 0, width, height);
 
-    oceanTime += 0.028;
+    oceanTime += 0.028 * simScale;
 
     const colors = getCurrentColors();
+    const xs = oceanXs;
+    const n = xs.length;
+
+    // Terms that depend only on x and time: once per frame, shared by every stroke
+    for (let j = 0; j < n; j++) {
+        oceanSwellX[j] = Math.sin(xs[j] * 0.0006 + oceanTime * 0.005);
+        const d = xs[j] * 0.0004 + oceanTime * 0.012;
+        oceanDriftSin[j] = Math.sin(d);
+        oceanDriftCos[j] = Math.cos(d);
+    }
+
+    const numStrokes = Math.floor(height / 20);
 
     for (const layer of oceanLayers) {
-        const numStrokes = Math.floor(height / 20);
+        const { sin1, cos1, sin2, cos2, sin3, cos3 } = layer;
 
         for (let i = 0; i < numStrokes; i++) {
             const baseY = (i / numStrokes) * height + layer.yOffset;
@@ -1027,33 +1155,37 @@ function animateOcean() {
             const persAlpha = 0.3 + easedT * 0.7;
             const persSpeed = 0.6 + easedT * 0.4;
 
-            ctx.beginPath();
-
             const rise = Math.sin(oceanTime * layer.riseSpeed + layer.risePhase + i * 0.12) * layer.riseAmount * persAmp;
 
-            let isFirst = true;
-            for (let x = -10; x <= width + 20; x += 7) {
-                const spatialMod = 0.75 + 0.25 * Math.sin(x * 0.0006 + oceanTime * 0.005) * Math.sin((y + i * 40) * 0.0006 + oceanTime * 0.003);
-                const amp = layer.amplitude * spatialMod * persAmp;
+            // Everything that is constant along this stroke. The wave phase is
+            // x * frequency + k, so sin(phase) = sin1 * cos(k) + cos1 * sin(k), and so on.
+            const swellY = Math.sin((y + i * 40) * 0.0006 + oceanTime * 0.003);
+            const k = oceanTime * layer.speed * persSpeed + layer.phaseOffset;
+            const sinK = Math.sin(k), cosK = Math.cos(k);
+            const k2 = k * 2.2 + layer.phaseOffset * 0.8;
+            const sinK2 = Math.sin(k2), cosK2 = Math.cos(k2);
+            const sinK3 = Math.sin(k * 0.5), cosK3 = Math.cos(k * 0.5);
+            const driftSinI = Math.sin(i * 0.3), driftCosI = Math.cos(i * 0.3);
+            const ampBase = layer.amplitude * persAmp;
+            const driftAmp = 70 * persAmp;
+            // Gerstner horizontal displacement - bunches points at crests, stronger near viewer
+            const hScale = layer.steepness * (0.15 + screenT * 0.25);
 
-                // Main phase
-                const phase = x * layer.frequency + oceanTime * layer.speed * persSpeed + layer.phaseOffset;
+            ctx.beginPath();
 
-                // Gerstner horizontal displacement - bunches points at crests, stronger near viewer
-                const hDisp = Math.cos(phase) * amp * layer.steepness * (0.15 + screenT * 0.25);
+            for (let j = 0; j < n; j++) {
+                const amp = ampBase * (0.75 + 0.25 * oceanSwellX[j] * swellY);
+                const sinP = sin1[j] * cosK + cos1[j] * sinK;
+                const cosP = cos1[j] * cosK - sin1[j] * sinK;
+                const wave2 = sin2[j] * cosK2 + cos2[j] * sinK2;
+                const wave3 = sin3[j] * cosK3 + cos3[j] * sinK3;
+                const drift = (oceanDriftSin[j] * driftCosI + oceanDriftCos[j] * driftSinI) * driftAmp;
 
-                // Vertical waves
-                const wave1 = Math.sin(phase) * amp;
-                const wave2 = Math.sin(phase * 2.2 + layer.phaseOffset * 0.8) * amp * 0.28;
-                const wave3 = Math.sin(phase * 0.5) * amp * 0.4;
-                const drift = Math.sin(x * 0.0004 + oceanTime * 0.012 + i * 0.3) * 70 * persAmp;
+                const finalX = xs[j] + cosP * amp * hScale;
+                const finalY = y + amp * (sinP + wave2 * 0.28 + wave3 * 0.4) + drift + rise;
 
-                const finalX = x + hDisp;
-                const finalY = y + wave1 + wave2 + wave3 + drift + rise;
-
-                if (isFirst) {
+                if (j === 0) {
                     ctx.moveTo(finalX, finalY);
-                    isFirst = false;
                 } else {
                     ctx.lineTo(finalX, finalY);
                 }
@@ -1065,7 +1197,7 @@ function animateOcean() {
             const g = colors.primary[1] * persColor;
             const b = colors.primary[2] * (persColor * 0.95 + 0.05);
 
-            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${layer.alpha * persAlpha})`;
+            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${Math.min(1, layer.alpha * persAlpha * simScale)})`;
             ctx.lineWidth = 0.4 + screenT * 1.3;
             ctx.stroke();
         }
@@ -1079,7 +1211,7 @@ function animateOcean() {
         const radius = 70 + Math.sin(oceanTime * 0.08 + i) * 30;
 
         const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
-        gradient.addColorStop(0, `rgba(${colors.accent[0]}, ${colors.accent[1]}, ${colors.accent[2]}, 0.018)`);
+        gradient.addColorStop(0, `rgba(${colors.accent[0]}, ${colors.accent[1]}, ${colors.accent[2]}, ${0.018 * simScale})`);
         gradient.addColorStop(1, 'transparent');
 
         ctx.fillStyle = gradient;
@@ -1139,7 +1271,7 @@ function animateFractal() {
         return;
     }
 
-    fractalTime += 0.012; // Faster morphing (2x per computed frame: see throttle above)
+    fractalTime += 0.012 * simScale; // Faster morphing (2x per computed frame: see throttle above)
 
     // Gentler c value drift - stays closer to stable regions
     const drift = 0.045;
@@ -1223,14 +1355,16 @@ function clearCanvas() {
     ctx.fillRect(0, 0, width, height);
 }
 
+// scales: the mode's animate() honours simScale itself (one draw standing for
+// several steps). The cheap modes do not need to; the loop just repeats them.
 const modes = {
-    ocean: { init: initOcean, animate: animateOcean },
-    fractal: { init: initFractal, animate: animateFractal },
+    ocean: { init: initOcean, animate: animateOcean, scales: true },
+    fractal: { init: initFractal, animate: animateFractal, scales: true },
     flow: { init: initFlow, animate: animateFlow },
     constellation: { init: initConstellation, animate: animateConstellation },
-    lorenz: { init: initLorenz, animate: animateLorenz },
+    lorenz: { init: initLorenz, animate: animateLorenz, scales: true },
     voronoi: { init: initVoronoi, animate: animateVoronoi },
-    lissajous: { init: initLissajous, animate: animateLissajous },
+    lissajous: { init: initLissajous, animate: animateLissajous, scales: true },
     off: { init: clearCanvas, animate: () => {} }
 };
 
@@ -1285,9 +1419,16 @@ function switchMode(mode) {
     restartLoop();
 }
 
+// The canvas box is sized in CSS (full width, 100lvh), so read its size from
+// there: on phones it does not change when the browser toolbar hides or shows
+function viewportSize() {
+    return [canvas.clientWidth || window.innerWidth, canvas.clientHeight || window.innerHeight];
+}
+
 function resize() {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
+    [width, height] = viewportSize();
+    canvas.width = width;
+    canvas.height = height;
 
     // Reinitialize current mode; restartLoop() handles rendering
     if (modes[currentMode]) {
@@ -1301,47 +1442,180 @@ const STEP_MS = 1000 / 60;
 let lastFrameTs = 0;
 let frameDebt = 0;
 
+// Load governor. The background is decoration, so it must never make the page
+// sluggish. Twice a second it looks at two things: how long a drawn step takes
+// to compute on this machine, and how late the next frame arrives after one
+// (which also catches drawing work the browser does outside this script). If
+// the animation is too heavy it draws less often (30, then 20, then 15 times a
+// second, each draw standing for more steps so the motion keeps its pace) and,
+// if even that is too much, it leaves a still frame. It steps back up only
+// after a sustained calm spell.
+const RATE_DIVISORS = [1, 2, 3, 4];
+const BUSY_SHARE = 0.35; // computing a drawn step may use at most this share of its time slot
+const LATE_SHARE = 0.25; // and may delay the next frame by at most this share of it
+const governor = {
+    level: 0,
+    stepCost: 0,      // average time to compute one drawn step (ms)
+    steps: 0,         // drawn steps since the rate last changed
+    drawGap: 0,       // average wait for the frame that follows a draw (ms)
+    pace: STEP_MS,    // the screen's own frame interval, learned from frames with no draw
+    strikes: 0,
+    calm: 0,
+    startedAt: 0,
+    lastCheck: 0,
+    frozen: false,    // gave up animating on this machine; a still frame stays on screen
+    thawed: false     // the one retry after freezing has been used
+};
+let drewLastFrame = false;
+let thawTimer = null;
+
+function setRate(level) {
+    governor.level = level;
+    simScale = RATE_DIVISORS[level];
+    governor.steps = 0;
+    governor.drawGap = 0;
+    governor.strikes = 0;
+    governor.calm = 0;
+    frameDebt = 0;
+}
+
+function resetGovernor() {
+    setRate(0);
+    governor.stepCost = 0;
+    governor.startedAt = 0;
+    governor.lastCheck = 0;
+    governor.frozen = false;
+    governor.thawed = false;
+    clearTimeout(thawTimer);
+    drewLastFrame = false;
+}
+
+function governLoad() {
+    if (governor.steps < 8) return; // judge on a handful of steps at the current rate, not the first one
+    const slot = STEP_MS * simScale;
+    const share = governor.stepCost / slot;
+    const lateness = Math.max(0, governor.drawGap - governor.pace);
+    const heavy = share > BUSY_SHARE || lateness > LATE_SHARE * slot;
+
+    if (heavy) {
+        governor.calm = 0;
+        const severe = share > BUSY_SHARE * 2 || lateness > LATE_SHARE * 2 * slot;
+        if (++governor.strikes < 2 && !severe) return; // a single mild reading can be a hiccup
+        if (governor.level < RATE_DIVISORS.length - 1) {
+            setRate(governor.level + 1);
+        } else {
+            // Too heavy even at the lowest rate: keep the frame that is on screen and stop
+            governor.frozen = true;
+            cancelAnimationFrame(animationId);
+            // One second chance half a minute later, in case the machine was only busy
+            // for a moment (a browser restoring its tabs, say). After that, stay still.
+            if (!governor.thawed) {
+                thawTimer = setTimeout(() => {
+                    if (!governor.frozen) return;
+                    restartLoop();
+                    governor.thawed = true;
+                }, 30000);
+            }
+        }
+        return;
+    }
+
+    governor.strikes = 0;
+    if (governor.level === 0) return;
+    // Recover slowly (ten calm seconds), and only if the faster rate would be comfortable too
+    const fasterSlot = STEP_MS * RATE_DIVISORS[governor.level - 1];
+    if (governor.stepCost / fasterSlot < BUSY_SHARE * 0.7 && lateness < LATE_SHARE * 0.4 * fasterSlot) {
+        if (++governor.calm >= 20) setRate(governor.level - 1);
+    } else {
+        governor.calm = 0;
+    }
+}
+
 function animate(ts) {
     animationId = requestAnimationFrame(animate);
 
     if (lastFrameTs) {
-        frameDebt += Math.min(ts - lastFrameTs, 100);
+        const gap = ts - lastFrameTs;
+        frameDebt += Math.min(gap, 100);
+        // A gap of a quarter second or more is a background tab or a stall, not our load
+        if (gap < 250) {
+            if (drewLastFrame) {
+                governor.drawGap = governor.drawGap ? governor.drawGap * 0.85 + gap * 0.15 : gap;
+            } else {
+                governor.pace = governor.pace * 0.85 + gap * 0.15;
+            }
+            // The screen cannot be slower than the frames we actually get
+            if (governor.drawGap && governor.drawGap < governor.pace) governor.pace = governor.drawGap;
+        }
+    } else {
+        governor.startedAt = ts;
+        governor.lastCheck = ts;
     }
     lastFrameTs = ts;
 
-    let steps = 0;
-    while (frameDebt >= STEP_MS && steps < 2) {
-        if (modes[currentMode]) {
-            modes[currentMode].animate();
+    const mode = modes[currentMode];
+    const slot = STEP_MS * simScale;
+    // How many slots are due. At full rate one missed slot may be caught up
+    // (so ~30fps displays still get 60 steps a second); when throttled, none.
+    const maxDue = simScale === 1 ? 2 : 1;
+    const due = Math.min(Math.floor(frameDebt / slot), maxDue);
+    if (due > 0) {
+        const stepsDue = simScale * due;
+        const t0 = performance.now();
+        if (mode.scales) {
+            // One draw that stands for every step due
+            const rate = simScale;
+            simScale = stepsDue;
+            mode.animate();
+            simScale = rate;
+            time += stepsDue;
+            colorTime += stepsDue; // Advance color cycling
+        } else {
+            for (let k = 0; k < stepsDue; k++) {
+                mode.animate();
+                time++;
+                colorTime++;
+            }
         }
-        time++;
-        colorTime++; // Advance color cycling
-        frameDebt -= STEP_MS;
-        steps++;
+        const cost = performance.now() - t0;
+        governor.stepCost = governor.steps < 5 ? cost : governor.stepCost * 0.9 + cost * 0.1;
+        governor.steps++;
+        frameDebt -= slot * due;
+        // Bound the backlog (no spiral after hitches) but keep the sub-step remainder
+        if (due === maxDue) frameDebt = Math.min(frameDebt, slot);
     }
-    // Bound the backlog (no spiral after hitches) but keep the sub-step
-    // remainder so steady ~30fps displays still reach 60 sim-steps/sec
-    if (steps === 2) frameDebt = Math.min(frameDebt, STEP_MS);
+    drewLastFrame = due > 0;
+
+    // Leave the first second and a half alone: page load makes its own long frames
+    if (ts - governor.lastCheck >= 500 && ts - governor.startedAt >= 1500) {
+        governor.lastCheck = ts;
+        governLoad();
+    }
 }
 
 function restartLoop() {
     cancelAnimationFrame(animationId);
+    resetGovernor();
     if (reducedMotion || currentMode === 'off') {
         renderStaticFrame(currentMode);
         return;
     }
     lastFrameTs = 0;
-    frameDebt = 0;
     animationId = requestAnimationFrame(animate);
 }
 
 // Debounced: mobile browsers fire resize continuously while the address bar
 // shows/hides, and a full re-init on every event visibly resets the animation
+const coarsePointer = window.matchMedia('(pointer: coarse)');
 let resizeTimer = null;
 window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
-        if (window.innerWidth === width && window.innerHeight === height) return;
+        const [w, h] = viewportSize();
+        if (w === width && h === height) return;
+        // On phones and tablets a height-only change is the browser toolbar or the
+        // keyboard coming and going, not a new layout: keep the animation running
+        if (w === width && coarsePointer.matches) return;
         resize();
         restartLoop();
     }, 150);
@@ -1368,8 +1642,8 @@ document.querySelectorAll('.bg-toggle').forEach(btn => {
 // custom properties (a running animation overrides inline transform)
 const heroGlow = document.querySelector('.hero-glow');
 if (heroGlow) {
-    document.addEventListener('mousemove', (e) => {
-        if (reducedMotion) return;
+    document.addEventListener('pointermove', (e) => {
+        if (reducedMotion || e.pointerType === 'touch') return;
         const x = (e.clientX / window.innerWidth - 0.5) * 20;
         const y = (e.clientY / window.innerHeight - 0.5) * 20;
         heroGlow.style.setProperty('--gx', (x * 0.5) + 'px');
