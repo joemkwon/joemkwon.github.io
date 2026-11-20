@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="5PIFWdNCbrEHXrkpVpL_Aq-HkoxYokrFJEffGZVGEsM" />
-    <meta name="description" content="Joe Kwon works on AI safety and governance: mitigating risks from secret loyalties in AI, building on work on internal deployment, automated R&D, and concentration of power. Background in cognitive science and moral cognition at MIT and Yale.">
+    <meta name="description" content="Joe Kwon works on AI safety and governance: developing safety standards for frontier AI developers at Guidelight AI Standards, building on work on secret loyalties in AI, internal deployment, automated R&D, and concentration of power. Background in cognitive science and moral cognition at MIT and Yale.">
     <meta name="theme-color" content="#080d12">
     <link rel="canonical" href="https://www.joe-kwon.com/">
 
@@ -12,7 +12,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.joe-kwon.com/">
     <meta property="og:title" content="Joe Kwon — AI Safety &amp; Governance Researcher">
-    <meta property="og:description" content="Joe Kwon works on AI safety and governance, currently threat modeling secretly loyal AI, building on work on internal deployment, automated R&D, and concentration of power.">
+    <meta property="og:description" content="Joe Kwon works on AI safety and governance, currently developing safety standards for frontier AI developers at Guidelight AI Standards, building on work on secret loyalties in AI, internal deployment, automated R&D, and concentration of power.">
     <meta property="og:image" content="https://www.joe-kwon.com/profile-og.jpg">
     <meta property="og:image:width" content="1024">
     <meta property="og:image:height" content="1024">
@@ -21,7 +21,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@joemkwon">
     <meta name="twitter:title" content="Joe Kwon — AI Safety &amp; Governance Researcher">
-    <meta name="twitter:description" content="Joe Kwon works on AI safety and governance, currently threat modeling secretly loyal AI, building on work on internal deployment, automated R&D, and concentration of power.">
+    <meta name="twitter:description" content="Joe Kwon works on AI safety and governance, currently developing safety standards for frontier AI developers at Guidelight AI Standards, building on work on secret loyalties in AI, internal deployment, automated R&D, and concentration of power.">
     <meta name="twitter:image" content="https://www.joe-kwon.com/profile-og.jpg">
 
     <!-- Structured Data -->
@@ -33,7 +33,7 @@
         "url": "https://www.joe-kwon.com",
         "image": "https://www.joe-kwon.com/profile-og.jpg",
         "jobTitle": "AI Safety Researcher",
-        "description": "Works on AI safety and governance, currently threat modeling secretly loyal AI, building on work on internal deployment, automated R&D, and concentration of power.",
+        "description": "Works on AI safety and governance, currently developing safety standards for frontier AI developers at Guidelight AI Standards, building on work on secret loyalties in AI, internal deployment, automated R&D, and concentration of power.",
         "alumniOf": [
             {
                 "@type": "CollegeOrUniversity",
@@ -101,7 +101,7 @@
 
             <div class="bio-content" data-level="more" style="display: none;">
                 <p>
-                    I think AI is likely to be deeply transformative, for better or worse, and I work on AI safety and governance to help things go well. Right now that means working on mitigating risks from secret loyalties in AI: systems trained to appear aligned while covertly serving another actor. Before this, I built multilingual LLMs as a research engineer and studied minds as a computational cognitive scientist, modeling moral cognition and how humans infer mental states from sparse evidence.
+                    I think AI is likely to be deeply transformative, for better or worse, and I work on AI safety and governance to help things go well. Right now that means working on safety standards for frontier AI developers at Guidelight AI Standards. Before this, I worked on mitigating risks from secret loyalties in AI (systems trained to appear aligned while covertly serving another actor), built multilingual LLMs as a research engineer, and studied minds as a computational cognitive scientist, modeling moral cognition and how humans infer mental states from sparse evidence.
                 </p>
                 <p>
                     The through-line is curiosity about minds, artificial and otherwise. I like questions that sit at the boundary between understanding how things work and deciding how they should.
@@ -135,7 +135,7 @@
                 <li>
                     <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-1">
                         <span class="project-name">AIs with Secret Loyalties are a Serious but Addressable Threat</span>
-                        <span class="project-meta">Kwon et al. · ICML TAIGR Workshop, 2026</span>
+                        <span class="project-meta">Kwon et al. · NeurIPS Spotlight, 2026</span>
                     </button>
                     <a class="project-link" href="https://www.formationresearch.com/secret-loyalties-whitepaper.pdf" aria-label="Open paper">&#8599;</a>
                     <span class="project-desc" id="pubdesc-1">A secretly loyal AI is one whose outputs advance the interests of a specific actor (an adversary state, an executive, another power) without that loyalty being disclosed to operators, auditors, or users. Proof-of-concept loyalties that evade black-box auditing can already be trained into open-weight models, and because secret loyalties are designed to evade governance, market pressure, and public scrutiny, they demand technical solutions. Unlike emergent misalignment, they target specific principals, which creates a distinct and tractable defensive foothold. The paper defines the threat, maps how it differs from standard backdoors and other attack pathways, and lays out a research agenda across five directions, ending with a call to action for researchers, developers, and governments.</span>
@@ -153,6 +153,7 @@
                         <span class="project-name">Evaluating Contextual Illegality: AI Compliance in Corporate Law Scenarios</span>
                         <span class="project-meta">Aka, Kwon, & Kolt · ICML, 2026</span>
                     </button>
+                    <a class="project-link" href="https://proceedings.mlr.press/v306/aka26a.html" aria-label="Open paper">&#8599;</a>
                     <span class="project-desc" id="pubdesc-3">Models reliably refuse requests that are explicitly unlawful, but in the real world illegality often comes from context. This evaluation builds four corporate-law scenarios where routine actions (editing documents, trading stock, requesting payment, approving communications) become unlawful because of circumstances like a pending investigation or a bankruptcy filing, and tests frontier models in both chat and agentic settings against a human baseline. The best models consistently followed lawful requests and refused unlawful ones, though performance varied substantially across scenarios and models, with distinct failure modes like over-refusal of lawful requests and better performance from reasoning models and in agentic environments. The methodology extends naturally to evaluating legal compliance in other scenarios and domains.</span>
                 </li>
                 <li>
@@ -181,131 +182,147 @@
                 </li>
                 <li>
                     <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-7">
+                        <span class="project-name">Prioritization of Risks from Artificial Intelligence: A Delphi Study of 272 International Experts</span>
+                        <span class="project-meta">Saeri et al. · 2026</span>
+                    </button>
+                    <a class="project-link" href="https://arxiv.org/abs/2606.04490" aria-label="Open paper">&#8599;</a>
+                    <span class="project-desc" id="pubdesc-7">Lists of AI risks are long, and managing them means knowing which are most severe, who is most exposed, and who should act. In a three-round Delphi study run in late 2025, 272 experts from 37 countries rated 24 AI risks on the probability and severity of harm, the vulnerability of sectors and actors, and who bears responsibility. Under business as usual, the panel judged 18 of the 24 risks to carry a more than 10% chance of catastrophic outcomes by 2030 (more than a million deaths or USD 100 billion in losses); even with pragmatic mitigations in place, five still did: dangerous capabilities, weapons and cyberattacks, environmental harm, inequality and unemployment, and power centralization. Experts saw AI users and the general public as the most vulnerable, and assigned the most responsibility to general-purpose AI developers and governance actors such as governments, regulators, and standards bodies.</span>
+                </li>
+                <li>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-8">
+                        <span class="project-name">A Cross-Sector Delphi Consensus on AI Evaluation Practices Showing Broad Agreement</span>
+                        <span class="project-meta">Manheim et al. · 2026</span>
+                    </button>
+                    <a class="project-link" href="https://evals-consensus.ai/" aria-label="Open project page">&#8599;</a>
+                    <span class="project-desc" id="pubdesc-8">AI evaluations increasingly shape deployment decisions, governance, and trust, yet expectations for how they should be designed, run, and reported remain fragmented across the communities that produce and rely on them. This preregistered Delphi study asked a cross-sector panel of researchers, auditors, industry practitioners, standards bodies, and government to rate 32 candidate practices. Twenty-seven reached consensus as strongly recommended or required across stakeholder groups, from justifying sample sizes and checking for data contamination to reporting compute and cost and releasing a replication package. Only three were contested: prospective analysis with pre-run readiness checks, data partitioning and holdouts, and piloting with baseline calibration. The resulting consensus statement offers evaluators a shared baseline, in the spirit of reporting guidelines like CONSORT and PRISMA.</span>
+                </li>
+                <li>
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-9">
                         <span class="project-name">When Large Language Models are More Persuasive Than Incentivized Humans, and Why</span>
                         <span class="project-meta">Schoenegger et al. · 2025</span>
                     </button>
                     <a class="project-link" href="https://arxiv.org/abs/2505.09662" aria-label="Open paper">&#8599;</a>
-                    <span class="project-desc" id="pubdesc-7">Participants answered quiz questions for real rewards while a persuader, either a human with a monetary incentive to succeed or an LLM, tried to steer them toward correct or incorrect answers in live conversation. Claude 3.5 Sonnet out-persuaded the incentivized humans in both directions, raising quiz accuracy when arguing for the truth and lowering it when arguing for the wrong answer; a follow-up with DeepSeek v3 replicated the accuracy effects but found an LLM advantage only for deceptive persuasion. Unlike human persuaders, the models' edge also waned over repeated interactions. Linguistic analysis of the transcripts suggests one mechanism: the LLMs express markedly higher conviction than humans do.</span>
+                    <span class="project-desc" id="pubdesc-9">Participants answered quiz questions for real rewards while a persuader, either a human with a monetary incentive to succeed or an LLM, tried to steer them toward correct or incorrect answers in live conversation. Claude 3.5 Sonnet out-persuaded the incentivized humans in both directions, raising quiz accuracy when arguing for the truth and lowering it when arguing for the wrong answer; a follow-up with DeepSeek v3 replicated the accuracy effects but found an LLM advantage only for deceptive persuasion. Unlike human persuaders, the models' edge also waned over repeated interactions. Linguistic analysis of the transcripts suggests one mechanism: the LLMs express markedly higher conviction than humans do.</span>
                 </li>
                 <li>
-                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-8">
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-10">
                         <span class="project-name">AI Agents: Governing Autonomy in the Digital Age</span>
                         <span class="project-meta">Kwon · Center for AI Policy, 2025</span>
                     </button>
                     <a class="project-link" href="https://www.centeraipolicy.org/work/ai-agents-governing-autonomy-in-the-digital-age" aria-label="Open paper">&#8599;</a>
-                    <span class="project-desc" id="pubdesc-8">Autonomous AI agents (systems that plan, use tools, and act with limited supervision) are moving out of research labs and into commercial deployment. This report maps three risks of that transition: catastrophic misuse, as the capabilities that streamline business can also enable cyber-intrusions and lower barriers to dangerous attacks; gradual human disempowerment as decisions shift to opaque systems; and large-scale workforce displacement. It proposes four measures for Congress: an "Autonomy Passport" federal registration system for agents that handle money, control devices, or run code, recording each agent's capabilities, operating domains, and safety testing; continuous oversight with authority to suspend dangerous deployments; mandatory human review of high-consequence decisions; and annual federal reporting on labor-market impacts. The through-line is risk-targeted regulation that protects the public without freezing agent development.</span>
+                    <span class="project-desc" id="pubdesc-10">Autonomous AI agents (systems that plan, use tools, and act with limited supervision) are moving out of research labs and into commercial deployment. This report maps three risks of that transition: catastrophic misuse, as the capabilities that streamline business can also enable cyber-intrusions and lower barriers to dangerous attacks; gradual human disempowerment as decisions shift to opaque systems; and large-scale workforce displacement. It proposes four measures for Congress: an "Autonomy Passport" federal registration system for agents that handle money, control devices, or run code, recording each agent's capabilities, operating domains, and safety testing; continuous oversight with authority to suspend dangerous deployments; mandatory human review of high-consequence decisions; and annual federal reporting on labor-market impacts. The through-line is risk-targeted regulation that protects the public without freezing agent development.</span>
                 </li>
                 <li>
-                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-9">
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-11">
                         <span class="project-name">AI at the Cyber Frontier: Securing America's Digital Future</span>
                         <span class="project-meta">Williams & Kwon · Center for AI Policy, 2025</span>
                     </button>
                     <a class="project-link" href="https://www.centeraipolicy.org/work/ai-at-the-cyber-frontier-securing-americas-digital-future" aria-label="Open paper">&#8599;</a>
-                    <span class="project-desc" id="pubdesc-9">A policy report for Congress on how advancing AI capabilities are reshaping the balance between cyber offense and defense. With US cybercrime losses estimated at $452 billion in 2024 and defensive investment lagging, the near-term equilibrium likely favors attackers, but choices by AI developers and Congress could tilt it toward defense. The report lays out five recommendations: a standardized suite of real-world cyber evaluations for AI models built by the US AI Safety Institute and paired with annual red-teaming, expanded funding for cyber-defensive AI including prize challenges like DARPA's AI Cyber Challenge, workforce investment through the Cyber PIVOTT Act and CyberCorps, a commission to fix public-private partnerships, and classifying frontier AI as critical infrastructure with mandatory incident reporting.</span>
+                    <span class="project-desc" id="pubdesc-11">A policy report for Congress on how advancing AI capabilities are reshaping the balance between cyber offense and defense. With US cybercrime losses estimated at $452 billion in 2024 and defensive investment lagging, the near-term equilibrium likely favors attackers, but choices by AI developers and Congress could tilt it toward defense. The report lays out five recommendations: a standardized suite of real-world cyber evaluations for AI models built by the US AI Safety Institute and paired with annual red-teaming, expanded funding for cyber-defensive AI including prize challenges like DARPA's AI Cyber Challenge, workforce investment through the Cyber PIVOTT Act and CyberCorps, a commission to fix public-private partnerships, and classifying frontier AI as critical infrastructure with mandatory incident reporting.</span>
                 </li>
                 <li>
-                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-10">
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-12">
                         <span class="project-name">Comparing Bottom-Up and Top-Down Steering Approaches on In-Context Learning Tasks</span>
                         <span class="project-meta">Brumley, Kwon, Krueger, Krasheninnikov, & Anwar · NeurIPS MINT Workshop, 2024</span>
                     </button>
                     <a class="project-link" href="https://arxiv.org/abs/2411.07213" aria-label="Open paper">&#8599;</a>
-                    <span class="project-desc" id="pubdesc-10">Interpretability research offers two routes to steering model behavior: bottom-up methods like function vectors and top-down methods like in-context vectors. The branches had seen little quantitative comparison. This case study pits a representative vector steering method from each against a shared set of in-context learning tasks. Neither dominates: in-context vectors prove stronger at broad behavioral shifts, while function vectors do better on tasks demanding precision. The split suggests evaluations of steering methods need to account for task type rather than treating steering as a single capability.</span>
+                    <span class="project-desc" id="pubdesc-12">Interpretability research offers two routes to steering model behavior: bottom-up methods like function vectors and top-down methods like in-context vectors. The branches had seen little quantitative comparison. This case study pits a representative vector steering method from each against a shared set of in-context learning tasks. Neither dominates: in-context vectors prove stronger at broad behavioral shifts, while function vectors do better on tasks demanding precision. The split suggests evaluations of steering methods need to account for task type rather than treating steering as a single capability.</span>
                 </li>
                 <li>
-                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-11">
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-13">
                         <span class="project-name">Neuro-Symbolic Models of Human Moral Judgment</span>
                         <span class="project-meta">Kwon, Levine, & Tenenbaum · CogSci, 2024</span>
                     </button>
                     <a class="project-link" href="https://escholarship.org/uc/item/1t2568mw" aria-label="Open paper">&#8599;</a>
-                    <span class="project-desc" id="pubdesc-11">Symbolic models of moral cognition are interpretable and grounded in moral psychology, but they cannot read natural language (every scenario must be hand-translated into a formal specification) while LLMs handle language fluently yet make opaque, unreliable models of human reasoning. This work hybridizes the two: GPT-4 extracts morally relevant features from a vignette, and the feature values feed either a learned regression or theory-driven cognitive models from the moral psychology literature, across three pipelines that vary how much existing theory they lean on. On MoralExceptQA, a benchmark of 148 scenarios probing when people find it permissible to break moral rules, the best hybrid models improve on the previous best (GPT-3.5 with moral chain-of-thought prompting) by roughly 20 F1 points and 18 accuracy points while keeping the judgment process transparent.</span>
+                    <span class="project-desc" id="pubdesc-13">Symbolic models of moral cognition are interpretable and grounded in moral psychology, but they cannot read natural language (every scenario must be hand-translated into a formal specification) while LLMs handle language fluently yet make opaque, unreliable models of human reasoning. This work hybridizes the two: GPT-4 extracts morally relevant features from a vignette, and the feature values feed either a learned regression or theory-driven cognitive models from the moral psychology literature, across three pipelines that vary how much existing theory they lean on. On MoralExceptQA, a benchmark of 148 scenarios probing when people find it permissible to break moral rules, the best hybrid models improve on the previous best (GPT-3.5 with moral chain-of-thought prompting) by roughly 20 F1 points and 18 accuracy points while keeping the judgment process transparent.</span>
                 </li>
                 <li>
-                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-12">
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-14">
                         <span class="project-name">Does It Know?: Probing for Uncertainty in Language Model Latent Beliefs</span>
                         <span class="project-meta">Huang & Kwon · NeurIPS Workshop, 2023</span>
                     </button>
                     <a class="project-link" href="https://openreview.net/forum?id=uSvN2oozRK" aria-label="Open paper">&#8599;</a>
-                    <span class="project-desc" id="pubdesc-12">Contrast-Consistent Search reads a true/false "latent belief" off a language model's internal activations with an unsupervised linear probe, but a binary probe has no way to register uncertainty or ambiguity. UCCS extends the method to a three-way classifier (true, false, or uncertain) still trained only on unlabeled data, and using the uncertain class to filter out low-confidence truth predictions improves accuracy across a diverse set of models and tasks. Evaluation is anchored by TYMES, a dataset of true and falsified facts extracted from recent news and paired with timestamps, so intersecting it with a model's training cutoff yields statements that provably postdate what the model could know, a proof-of-concept for benchmarking uncertainty and time-sensitive world knowledge.</span>
+                    <span class="project-desc" id="pubdesc-14">Contrast-Consistent Search reads a true/false "latent belief" off a language model's internal activations with an unsupervised linear probe, but a binary probe has no way to register uncertainty or ambiguity. UCCS extends the method to a three-way classifier (true, false, or uncertain) still trained only on unlabeled data, and using the uncertain class to filter out low-confidence truth predictions improves accuracy across a diverse set of models and tasks. Evaluation is anchored by TYMES, a dataset of true and falsified facts extracted from recent news and paired with timestamps, so intersecting it with a model's training cutoff yields statements that provably postdate what the model could know, a proof-of-concept for benchmarking uncertainty and time-sensitive world knowledge.</span>
                 </li>
                 <li>
-                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-13">
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-15">
                         <span class="project-name">Explore, Establish, Exploit: Red Teaming Language Models from Scratch</span>
                         <span class="project-meta">Casper, Lin, Kwon, Culp, & Hadfield-Menell · 2023</span>
                     </button>
                     <a class="project-link" href="https://arxiv.org/abs/2306.09442" aria-label="Open paper">&#8599;</a>
-                    <span class="project-desc" id="pubdesc-13">Automated red-teaming tools typically assume a ready-made classifier for the harmful behavior being hunted, which prevents tailoring attacks to the target model, and if failures were that easy to classify, they could have been filtered out in advance. This work tackles red-teaming from scratch, where the adversary starts with no failure classifier, through three stages: explore the model's range of behaviors, establish a measure of undesired behavior trained on human evaluations, then exploit that measure to search for diverse adversarial prompts. Applied to GPT-3, the pipeline uncovers classes of inputs that elicit false statements and yields CommonClaim, a dataset of 20,000 statements human-labeled as common-knowledge true, false, or neither.</span>
+                    <span class="project-desc" id="pubdesc-15">Automated red-teaming tools typically assume a ready-made classifier for the harmful behavior being hunted, which prevents tailoring attacks to the target model, and if failures were that easy to classify, they could have been filtered out in advance. This work tackles red-teaming from scratch, where the adversary starts with no failure classifier, through three stages: explore the model's range of behaviors, establish a measure of undesired behavior trained on human evaluations, then exploit that measure to search for diverse adversarial prompts. Applied to GPT-3, the pipeline uncovers classes of inputs that elicit false statements and yields CommonClaim, a dataset of 20,000 statements human-labeled as common-knowledge true, false, or neither.</span>
                 </li>
                 <li>
-                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-14">
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-16">
                         <span class="project-name">When It's Not Out of Line to Get Out of Line</span>
                         <span class="project-meta">Kwon, Tan, Tenenbaum, & Levine · CogSci, 2023</span>
                     </button>
                     <a class="project-link" href="https://escholarship.org/uc/item/3w59797h" aria-label="Open paper">&#8599;</a>
-                    <span class="project-desc" id="pubdesc-14">How do people decide when it's acceptable to break a moral rule, like leaving a queue to skip ahead? One hypothesis is universalization: alongside outcome-based measures of welfare and harm, people ask what would happen if everyone felt free to ignore the rule. The experiments use a virtual environment where agents queue to gather water; participants judge agents who get out of line to reach the water faster, and an action's universalizability is modeled by simulating every agent heading straight for the water and evaluating the effects. Universalization turns out to play an important role in rule-breaking judgments, operating alongside outcome-based concerns like welfare aggregation and harm.</span>
+                    <span class="project-desc" id="pubdesc-16">How do people decide when it's acceptable to break a moral rule, like leaving a queue to skip ahead? One hypothesis is universalization: alongside outcome-based measures of welfare and harm, people ask what would happen if everyone felt free to ignore the rule. The experiments use a virtual environment where agents queue to gather water; participants judge agents who get out of line to reach the water faster, and an action's universalizability is modeled by simulating every agent heading straight for the water and evaluating the effects. Universalization turns out to play an important role in rule-breaking judgments, operating alongside outcome-based concerns like welfare aggregation and harm.</span>
                 </li>
                 <li>
-                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-15">
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-17">
                         <span class="project-name">Values Shape Optimizers Shape Values</span>
                         <span class="project-meta">Kwon · NeurIPS Human-Centered AI Workshop, 2022</span>
                     </button>
                     <a class="project-link" href="https://neurips.cc/virtual/2022/58821" aria-label="Open paper">&#8599;</a>
-                    <span class="project-desc" id="pubdesc-15">AI systems typically optimize proxy objectives for human values (recommender systems maximize engagement metrics as a stand-in for serving entertaining content) while the optimization itself shifts the values it was meant to serve, from nudging political leanings to steering users into particular online communities. Rather than treating value specification and value influence as separate problems, this position piece frames values and optimizers as a single intertwined system in which each continually feeds into and transforms the other. Taking that feedback loop seriously, it argues, is a precondition for building AI that preserves diverse values across individuals and communities.</span>
+                    <span class="project-desc" id="pubdesc-17">AI systems typically optimize proxy objectives for human values (recommender systems maximize engagement metrics as a stand-in for serving entertaining content) while the optimization itself shifts the values it was meant to serve, from nudging political leanings to steering users into particular online communities. Rather than treating value specification and value influence as separate problems, this position piece frames values and optimizers as a single intertwined system in which each continually feeds into and transforms the other. Taking that feedback loop seriously, it argues, is a precondition for building AI that preserves diverse values across individuals and communities.</span>
                 </li>
                 <li>
-                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-16">
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-18">
                         <span class="project-name">Forecasting Future World Events With Neural Networks</span>
                         <span class="project-meta">Zou, Xiao, Jia, Kwon, et al. · NeurIPS, 2022</span>
                     </button>
                     <a class="project-link" href="https://arxiv.org/abs/2206.15474" aria-label="Open paper">&#8599;</a>
-                    <span class="project-desc" id="pubdesc-16">Expert human forecasters shape policy on pandemics, conflict, and economics. Can language models do the same job? Autocast is a benchmark of thousands of forecasting questions drawn from real forecasting tournaments, paired with a date-organized news corpus so models can be evaluated under the same information conditions past human forecasters faced, without leakage from the future. A companion dataset, IntervalQA, targets calibration on numerical questions that span orders of magnitude. Language models fall well short of the human expert baseline, though performance improves with model scale and with retrieval from the news corpus.</span>
+                    <span class="project-desc" id="pubdesc-18">Expert human forecasters shape policy on pandemics, conflict, and economics. Can language models do the same job? Autocast is a benchmark of thousands of forecasting questions drawn from real forecasting tournaments, paired with a date-organized news corpus so models can be evaluated under the same information conditions past human forecasters faced, without leakage from the future. A companion dataset, IntervalQA, targets calibration on numerical questions that span orders of magnitude. Language models fall well short of the human expert baseline, though performance improves with model scale and with retrieval from the news corpus.</span>
                 </li>
                 <li>
-                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-17">
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-19">
                         <span class="project-name">Scaling Out-of-Distribution Detection for Real-World Settings</span>
                         <span class="project-meta">Hendrycks, Basart, Mazeika, Zou, Kwon, et al. · ICML, 2022</span>
                     </button>
                     <a class="project-link" href="https://arxiv.org/abs/1911.11132" aria-label="Open paper">&#8599;</a>
-                    <span class="project-desc" id="pubdesc-17">Out-of-distribution detection had mostly been studied in small-scale, low-resolution settings that look little like deployment. This work moves the problem to large-scale multiclass, multi-label, and segmentation regimes, building three benchmarks to support it: Species, a dataset of over 700,000 images spanning more than a thousand anomalous species for ImageNet-scale detectors; ImageNet-21K-based evaluations of multi-label detectors on PASCAL VOC and COCO; and an anomaly segmentation benchmark built around road hazards. Across all three settings, a surprisingly simple detector, scoring each input by its maximum logit, outperforms prior methods, establishing a new baseline for realistic OOD detection.</span>
+                    <span class="project-desc" id="pubdesc-19">Out-of-distribution detection had mostly been studied in small-scale, low-resolution settings that look little like deployment. This work moves the problem to large-scale multiclass, multi-label, and segmentation regimes, building three benchmarks to support it: Species, a dataset of over 700,000 images spanning more than a thousand anomalous species for ImageNet-scale detectors; ImageNet-21K-based evaluations of multi-label detectors on PASCAL VOC and COCO; and an anomaly segmentation benchmark built around road hazards. Across all three settings, a surprisingly simple detector, scoring each input by its maximum logit, outperforms prior methods, establishing a new baseline for realistic OOD detection.</span>
                 </li>
                 <li>
-                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-18">
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-20">
                         <span class="project-name">Flexibility in Moral Cognition: When Is It Okay to Break the Rules?</span>
                         <span class="project-meta">Kwon, Tenenbaum, & Levine · CogSci, 2022</span>
                     </button>
                     <a class="project-link" href="https://escholarship.org/uc/item/46r7b6ft" aria-label="Open paper">&#8599;</a>
-                    <span class="project-desc" id="pubdesc-18">Simple rules like "don't cut in line" cannot explain how easily people recognize legitimate exceptions to them. To probe that flexibility, participants watched clips of a video game in which agents queue to gather water from wells and streams, then judged whether an agent who skipped the line acted acceptably, across dynamic and spatio-temporally varied scenes designed so answers could not be memorized from real life. Judgments tracked a generative understanding of the rule's underlying function, roughly whether everyone could cut in the same situation without things going badly, and could not be accounted for by either simple rule adherence or utility maximization.</span>
+                    <span class="project-desc" id="pubdesc-20">Simple rules like "don't cut in line" cannot explain how easily people recognize legitimate exceptions to them. To probe that flexibility, participants watched clips of a video game in which agents queue to gather water from wells and streams, then judged whether an agent who skipped the line acted acceptably, across dynamic and spatio-temporally varied scenes designed so answers could not be memorized from real life. Judgments tracked a generative understanding of the rule's underlying function, roughly whether everyone could cut in the same situation without things going badly, and could not be accounted for by either simple rule adherence or utility maximization.</span>
                 </li>
                 <li>
-                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-19">
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-21">
                         <span class="project-name">Social Inferences from Physical Evidence via Bayesian Event Reconstruction</span>
                         <span class="project-meta">Lopez-Brau, Kwon, & Jara-Ettinger · Journal of Experimental Psychology: General, 2022</span>
                     </button>
                     <a class="project-link" href="https://pubmed.ncbi.nlm.nih.gov/35901411/" aria-label="Open paper">&#8599;</a>
-                    <span class="project-desc" id="pubdesc-19">People can make social inferences about agents they never observed. From a small pile of cookie crumbs in a room, they can judge where someone entered and which goal they pursued, and from the position of two piles, whether one or two agents were present. The account proposed here is mental event reconstruction: observers infer the unseen behavior that would have produced the physical evidence, then read social information off the reconstructed events. A computational model embedding this idea in a Bayesian framework for action understanding matches human judgments with high quantitative accuracy across three experiments, and participants' explicitly reconstructed trajectories predict the entry-point and goal inferences made from the evidence alone.</span>
+                    <span class="project-desc" id="pubdesc-21">People can make social inferences about agents they never observed. From a small pile of cookie crumbs in a room, they can judge where someone entered and which goal they pursued, and from the position of two piles, whether one or two agents were present. The account proposed here is mental event reconstruction: observers infer the unseen behavior that would have produced the physical evidence, then read social information off the reconstructed events. A computational model embedding this idea in a Bayesian framework for action understanding matches human judgments with high quantitative accuracy across three experiments, and participants' explicitly reconstructed trajectories predict the entry-point and goal inferences made from the evidence alone.</span>
                 </li>
                 <li>
-                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-20">
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-22">
                         <span class="project-name">Detecting the Involvement of Agents Through Physical Reasoning</span>
                         <span class="project-meta">Lopez-Brau, Kwon, McBean, Yildirim, & Jara-Ettinger · CogSci, 2021</span>
                     </button>
                     <a class="project-link" href="https://escholarship.org/uc/item/43n9v4z9" aria-label="Open paper">&#8599;</a>
-                    <span class="project-desc" id="pubdesc-20">A stack of rocks encountered in the woods immediately suggests that someone was there. Developmental psychology has attributed this kind of agency detection to a sensitivity to violations of randomness; this work formalizes that idea as a computational model and tests it quantitatively. The model infers agency by estimating how likely a scene is to have arisen naturally, with human intuitive physics instantiated as a physics engine. Human judgments follow suit: agency detection tracks not just a scene's superficial visual properties but its underlying physical generative process, suggesting people use intuitive physics to decide when a scene calls for social reasoning at all.</span>
+                    <span class="project-desc" id="pubdesc-22">A stack of rocks encountered in the woods immediately suggests that someone was there. Developmental psychology has attributed this kind of agency detection to a sensitivity to violations of randomness; this work formalizes that idea as a computational model and tests it quantitatively. The model infers agency by estimating how likely a scene is to have arisen naturally, with human intuitive physics instantiated as a physics engine. Human judgments follow suit: agency detection tracks not just a scene's superficial visual properties but its underlying physical generative process, suggesting people use intuitive physics to decide when a scene calls for social reasoning at all.</span>
                 </li>
                 <li>
-                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-21">
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-23">
                         <span class="project-name">Mental State Inference from Indirect Evidence Through Bayesian Event Reconstruction</span>
                         <span class="project-meta">Lopez-Brau, Kwon, & Jara-Ettinger · CogSci, 2020</span>
                     </button>
                     <a class="project-link" href="https://cognitivesciencesociety.org/cogsci20/papers/0085/" aria-label="Open paper">&#8599;</a>
-                    <span class="project-desc" id="pubdesc-21">A chewed-up pencil suggests anxiety; an open door suggests someone left in a hurry. People readily attribute mental states to agents they never saw act. This work explains that ability as Bayesian event reconstruction: given a physical trace (a pile of cookie crumbs in a gridworld room), the model jointly infers the absent agent's goal, entry point, and trajectory under a generative model of utility-maximizing action plans. Across two experiments, its predictions quantitatively matched participants' judgments about which goal the agent pursued and which door it entered (r = 0.94), and even how many agents had been in the room (r = 0.78), while cue-based regressions trained directly on the human data fell far short. The results support the idea that Theory of Mind is a generative model of how mental states produce action, one that works even when the actions themselves must be reconstructed.</span>
+                    <span class="project-desc" id="pubdesc-23">A chewed-up pencil suggests anxiety; an open door suggests someone left in a hurry. People readily attribute mental states to agents they never saw act. This work explains that ability as Bayesian event reconstruction: given a physical trace (a pile of cookie crumbs in a gridworld room), the model jointly infers the absent agent's goal, entry point, and trajectory under a generative model of utility-maximizing action plans. Across two experiments, its predictions quantitatively matched participants' judgments about which goal the agent pursued and which door it entered (r = 0.94), and even how many agents had been in the room (r = 0.78), while cue-based regressions trained directly on the human data fell far short. The results support the idea that Theory of Mind is a generative model of how mental states produce action, one that works even when the actions themselves must be reconstructed.</span>
                 </li>
                 <li>
-                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-22">
+                    <button class="project-toggle" aria-expanded="false" aria-controls="pubdesc-24">
                         <span class="project-name">Lift-the-Flap: What, Where and When for Context Reasoning</span>
                         <span class="project-meta">Zhang, Tseng, Montejo, Kwon, & Kreiman · 2019</span>
                     </button>
                     <a class="project-link" href="https://arxiv.org/abs/1902.00163" aria-label="Open paper">&#8599;</a>
-                    <span class="project-desc" id="pubdesc-22">How much can you infer about an object you cannot see, purely from its surroundings? The lift-the-flap task poses exactly this: identify a target hidden behind a flap in a natural image using only scene context. An online psychophysics experiment records where and when people click to reveal parts of the image, isolating the sampling patterns and visual features that predict accurate contextual inference. Those findings inform an extended recurrent attention model that attends to informative context regions and accumulates evidence across clicks, reaching human-level accuracy while reproducing human-like sampling behavior and learning interpretable contextual features.</span>
+                    <span class="project-desc" id="pubdesc-24">How much can you infer about an object you cannot see, purely from its surroundings? The lift-the-flap task poses exactly this: identify a target hidden behind a flap in a natural image using only scene context. An online psychophysics experiment records where and when people click to reveal parts of the image, isolating the sampling patterns and visual features that predict accurate contextual inference. Those findings inform an extended recurrent attention model that attends to informative context regions and accumulates evidence across clicks, reaching human-level accuracy while reproducing human-like sampling behavior and learning interpretable contextual features.</span>
                 </li>
             </ul>
         </section>
@@ -317,7 +334,7 @@
                 <article class="timeline-entry">
                     <span class="timeline-era">now</span>
                     <p>
-                        I'm working at <a href="https://guidelight.ai">Guidelight AI Standards</a>! More details coming soon.
+                        I'm a Member of Research Staff at <a href="https://guidelight.ai">Guidelight AI Standards</a>, working on safety standards for frontier AI developers.
                     </p>
                 </article>
 
